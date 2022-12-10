@@ -1,9 +1,8 @@
 export default function InSeasonLogo() {
   return (
     <svg
-      width="223"
-      height="30"
-      viewBox="0 0 223 30"
+      className="h-[24px] w-[180px] sm:h-[30px] sm:w-[223px]"
+      viewBox={`0 0 223 30`}
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >

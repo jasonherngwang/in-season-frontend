@@ -6,7 +6,7 @@ export default function Header() {
   return (
     <header className="py-8">
       <nav>
-        <ul className="flex justify-between">
+        <ul className="flex items-center justify-between">
           <li>
             <Bars3Icon className='text-gray-300" h-6 w-6' />
           </li>
