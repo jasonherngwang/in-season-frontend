@@ -1,6 +1,5 @@
 import InSeasonLogo from '../icons/InSeasonLogo';
-import { Bars3Icon } from '@heroicons/react/24/outline';
-import { ShoppingBagIcon } from '@heroicons/react/24/outline';
+import { Bars3Icon, ShoppingBagIcon } from '@heroicons/react/24/outline';
 
 export default function Header() {
   return (
