@@ -7,9 +7,9 @@ export default function Filters() {
           htmlFor="searchFilter"
           className="block text-lg font-medium text-gray-500"
         >
-          Filter foods
+          Filter
         </label>
-        <div className="mt-1">
+        <div className="mt-2">
           <input
             type="text"
             name="searchFilter"
@@ -24,7 +24,7 @@ export default function Filters() {
         <p className="block text-lg font-medium text-gray-500">
           Select categories
         </p>
-        <div className="mt-3 flex gap-4 sm:text-sm md:gap-12 md:text-base">
+        <div className="mt-4 flex gap-4 sm:text-sm md:gap-12 md:text-base">
           <div className="flex items-center">
             <input
               id="checkVegetable"
