@@ -1,3 +1,4 @@
+import { Food } from '../types';
 import FoodCard from './FoodCard';
 
 export default function FoodListSection({ foods }: { foods: Food[] }) {

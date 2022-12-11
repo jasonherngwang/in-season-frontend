@@ -1,11 +1,17 @@
 import { Food } from '../types';
+
+import { useStateValue } from '../state';
+
 import FoodListSection from './FoodListSection';
+
 import {
   ArrowLeftCircleIcon,
   ArrowRightCircleIcon,
 } from '@heroicons/react/24/outline';
+import { useEffect } from 'react';
 
-export default function Foods({ foods }: { foods: Food[] }) {
+export default function FoodList() {
+  const [{ foodsToShow }, dispatch] = useStateValue();
   // Partition foods by seasonality based on current and next month
   const now = new Date();
   const month = now.getMonth(); // Data are already 0-indexed
@@ -20,7 +26,7 @@ export default function Foods({ foods }: { foods: Food[] }) {
   const foodsUpcoming: Food[] = [];
   const foodsOutOfSeason: Food[] = [];
 
-  foods.forEach((food) => {
+  foodsToShow.forEach((food) => {
     if (food.months.includes(month)) {
       foodsInSeason.push(food);
     } else if (food.months.includes(nextMonth)) {

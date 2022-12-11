@@ -2,7 +2,7 @@ export type User = {
   id: string;
   username: string;
   foods: Food[];
-};
+} | null;
 
 export type Food = {
   id: string;
@@ -21,7 +21,7 @@ export type Basket = {
 };
 
 // Object used for filtering lists of foods
-export type FilterInput = {
+export type FilterParams = {
   filterTerm: string;
   showVegetable: boolean;
   showFruit: boolean;

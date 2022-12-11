@@ -1,38 +1,51 @@
-import { FilterInput } from '../types';
+import { useEffect, useState } from 'react';
+import { useStateValue, filterFoodsAction } from '../state';
+import { FilterParams } from '../types';
 
-type FiltersProps = {
-  filters: FilterInput;
-  setFilters: (arg: FilterInput) => void;
-};
+export default function Filters() {
+  const [, dispatch] = useStateValue();
+  const [filterParams, setFilterParams] = useState<FilterParams>({
+    filterTerm: '',
+    showVegetable: true,
+    showFruit: true,
+    showOther: true,
+  });
 
-export default function Filters({ filters, setFilters }: FiltersProps) {
   const handleFilterTerm = (filterTerm: string) => {
-    setFilters({
-      ...filters,
+    setFilterParams({
+      ...filterParams,
       filterTerm,
     });
   };
 
-  const handleToggleVegetable = () => {
-    setFilters({
-      ...filters,
-      showVegetable: !filters.showVegetable,
-    });
+  const handleToggleCategory = (category: string) => {
+    switch (category) {
+      case 'vegetable':
+        setFilterParams({
+          ...filterParams,
+          showVegetable: !filterParams.showVegetable,
+        });
+        break;
+      case 'fruit':
+        setFilterParams({
+          ...filterParams,
+          showFruit: !filterParams.showFruit,
+        });
+        break;
+      case 'other':
+        setFilterParams({
+          ...filterParams,
+          showOther: !filterParams.showOther,
+        });
+        break;
+      default:
+        return false;
+    }
   };
 
-  const handleToggleFruit = () => {
-    setFilters({
-      ...filters,
-      showFruit: !filters.showFruit,
-    });
-  };
-
-  const handleToggleOther = () => {
-    setFilters({
-      ...filters,
-      showOther: !filters.showOther,
-    });
-  };
+  useEffect(() => {
+    dispatch(filterFoodsAction(filterParams));
+  }, [dispatch, filterParams]);
 
   return (
     <div className="mt-6 mb-10 grid grid-cols-1 gap-x-6 gap-y-4 sm:grid-cols-2">
@@ -68,9 +81,9 @@ export default function Filters({ filters, setFilters }: FiltersProps) {
               id="checkVegetable"
               name="checkVegetable"
               type="checkbox"
-              checked={filters.showVegetable}
+              checked={filterParams.showVegetable}
               className="h-6 w-6 rounded border-neutral-300 text-green-600 focus:ring-green-600"
-              onChange={handleToggleVegetable}
+              onChange={() => handleToggleCategory('vegetable')}
             />
             <div className="ml-2">
               <label
@@ -86,9 +99,9 @@ export default function Filters({ filters, setFilters }: FiltersProps) {
               id="checkFruit"
               name="checkFruit"
               type="checkbox"
-              checked={filters.showFruit}
+              checked={filterParams.showFruit}
               className="h-6 w-6 rounded border-neutral-300 text-green-600 focus:ring-green-600"
-              onChange={handleToggleFruit}
+              onChange={() => handleToggleCategory('fruit')}
             />
             <div className="ml-2">
               <label
@@ -104,9 +117,9 @@ export default function Filters({ filters, setFilters }: FiltersProps) {
               id="checkOther"
               name="checkOther"
               type="checkbox"
-              checked={filters.showOther}
+              checked={filterParams.showOther}
               className="h-6 w-6 rounded border-neutral-300 text-green-600 focus:ring-green-600"
-              onChange={handleToggleOther}
+              onChange={() => handleToggleCategory('other')}
             />
             <div className="ml-2">
               <label
