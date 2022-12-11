@@ -17,6 +17,7 @@ import loginService, { Token } from './services/loginService';
 import Header from './components/Header';
 import Filters from './components/Filters';
 import FoodList from './components/FoodList';
+import EditFood from './components/EditFood';
 import Login from './components/Login';
 
 export default function App() {
@@ -63,6 +64,7 @@ export default function App() {
     <div className="mx-auto max-w-7xl border-2 px-4 pb-16 sm:px-6 lg:px-8">
       <Header handleLogout={handleLogout} />
       <Routes>
+        <Route path="/foods/edit" element={<EditFood />} />
         <Route path="/login" element={<Login handleLogin={handleLogin} />} />
         <Route
           path="/"
