@@ -1,16 +1,21 @@
 import React, { createContext, useContext, useReducer } from 'react';
-import { Food, User } from '../types';
+import { Food, FilterParams, User } from '../types';
 import { Action } from './reducer';
 
 export type State = {
   foods: Food[];
-  foodsToShow: Food[];
+  filterParams: FilterParams;
   user: User;
 };
 
 const initialState: State = {
   foods: [],
-  foodsToShow: [],
+  filterParams: {
+    filterTerm: '',
+    showVegetable: true,
+    showFruit: true,
+    showOther: true,
+  },
   user: null,
 };
 

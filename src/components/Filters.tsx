@@ -1,51 +1,51 @@
-import { useEffect, useState } from 'react';
-import { useStateValue, filterFoodsAction } from '../state';
-import { FilterParams } from '../types';
+import { useStateValue, setFiltersAction } from '../state';
 
 export default function Filters() {
-  const [, dispatch] = useStateValue();
-  const [filterParams, setFilterParams] = useState<FilterParams>({
-    filterTerm: '',
-    showVegetable: true,
-    showFruit: true,
-    showOther: true,
-  });
+  const [{ filterParams }, dispatch] = useStateValue();
 
   const handleFilterTerm = (filterTerm: string) => {
-    setFilterParams({
-      ...filterParams,
-      filterTerm,
-    });
+    dispatch(
+      setFiltersAction({
+        ...filterParams,
+        filterTerm,
+      })
+    );
   };
 
   const handleToggleCategory = (category: string) => {
     switch (category) {
       case 'vegetable':
-        setFilterParams({
-          ...filterParams,
-          showVegetable: !filterParams.showVegetable,
-        });
+        dispatch(
+          setFiltersAction({
+            ...filterParams,
+            showVegetable: !filterParams.showVegetable,
+          })
+        );
         break;
       case 'fruit':
-        setFilterParams({
-          ...filterParams,
-          showFruit: !filterParams.showFruit,
-        });
+        dispatch(
+          setFiltersAction({
+            ...filterParams,
+            showFruit: !filterParams.showFruit,
+          })
+        );
         break;
       case 'other':
-        setFilterParams({
-          ...filterParams,
-          showOther: !filterParams.showOther,
-        });
+        dispatch(
+          setFiltersAction({
+            ...filterParams,
+            showOther: !filterParams.showOther,
+          })
+        );
         break;
       default:
         return false;
     }
   };
 
-  useEffect(() => {
-    dispatch(filterFoodsAction(filterParams));
-  }, [dispatch, filterParams]);
+  // useEffect(() => {
+  //   dispatch(setFiltersAction(filterParams));
+  // }, [dispatch, filterParams]);
 
   return (
     <div className="mt-6 mb-10 grid grid-cols-1 gap-x-6 gap-y-4 sm:grid-cols-2">

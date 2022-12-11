@@ -34,5 +34,4 @@ const getAll = async () => {
 //   return response.data
 // }
 
-// export default { getAll, create, update, deleteBlog, setToken };
 export default { getAll };
