@@ -7,13 +7,13 @@ export default function Header() {
       <nav>
         <ul className="flex items-center justify-between">
           <li>
-            <Bars3Icon className='text-gray-300" h-6 w-6' />
+            <Bars3Icon className='text-neutral-300" h-6 w-6' />
           </li>
           <li>
             <InSeasonLogo />
           </li>
           <li>
-            <ShoppingBagIcon className='text-gray-300" h-6 w-6' />
+            <ShoppingBagIcon className='text-neutral-300" h-6 w-6' />
           </li>
         </ul>
       </nav>

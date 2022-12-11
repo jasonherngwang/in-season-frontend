@@ -1,86 +1,75 @@
-import FoodCard from './FoodCard';
+import { Food } from '../types';
+import FoodListSection from './FoodListSection';
+import {
+  ArrowLeftCircleIcon,
+  ArrowRightCircleIcon,
+} from '@heroicons/react/24/outline';
 
-const foods = [
-  {
-    id: '1',
-    name: 'Green Cabbage',
-    category: 'vegetable',
-    months: [1, 2, 3],
-    description: 'A humble green cabbage',
-    imageUrl: 'https://via.placeholder.com/150',
-  },
-  {
-    id: '2',
-    name: 'Carrot',
-    category: 'vegetable',
-    months: [3, 4, 5],
-    description: 'A humble orange carrot',
-    imageUrl: 'https://via.placeholder.com/150',
-  },
-  {
-    id: '3',
-    name: 'Watermelon',
-    category: 'fruit',
-    months: [11, 12, 1],
-    description: 'A humble watermelon',
-    imageUrl: 'https://via.placeholder.com/150',
-  },
-  {
-    id: '4',
-    name: 'Apricot',
-    category: 'fruit',
-    months: [1, 2, 3],
-    description: 'A humble apricot',
-    imageUrl: 'https://via.placeholder.com/150',
-  },
-  {
-    id: '5',
-    name: 'Beet',
-    category: 'vegetable',
-    months: [3, 4, 5],
-    description: 'A humble beet',
-    imageUrl: 'https://via.placeholder.com/150',
-  },
-  {
-    id: '6',
-    name: 'Rosemary',
-    category: 'other',
-    months: [11, 12, 1],
-    description: 'A humble rosemary herb',
-    imageUrl: 'https://via.placeholder.com/150',
-  },
-  {
-    id: '7',
-    name: 'Green Cabbage',
-    category: 'vegetable',
-    months: [1, 2, 3],
-    description: 'A humble green cabbage',
-    imageUrl: 'https://via.placeholder.com/150',
-  },
-  {
-    id: '8',
-    name: 'A Really Long Name',
-    category: 'vegetable',
-    months: [3, 4, 5],
-    description: 'A humble orange carrot',
-    imageUrl: 'https://via.placeholder.com/150',
-  },
-  {
-    id: '9',
-    name: 'Watermelon',
-    category: 'fruit',
-    months: [11, 12, 1],
-    description: 'A humble watermelon',
-    imageUrl: 'https://via.placeholder.com/150',
-  },
-];
+export default function Foods({ foods }: { foods: Food[] }) {
+  // Partition foods by seasonality based on current and next month
+  const now = new Date();
+  const month = now.getMonth(); // Data are already 0-indexed
+  const monthName = now.toLocaleString('default', { month: 'long' });
 
-export default function Foods() {
+  const next = new Date();
+  next.setMonth((month + 1) % 12);
+  const nextMonth = next.getMonth();
+  const nextMonthName = next.toLocaleString('default', { month: 'long' });
+
+  const foodsInSeason: Food[] = [];
+  const foodsUpcoming: Food[] = [];
+  const foodsOutOfSeason: Food[] = [];
+
+  foods.forEach((food) => {
+    if (food.months.includes(month)) {
+      foodsInSeason.push(food);
+    } else if (food.months.includes(nextMonth)) {
+      foodsUpcoming.push(food);
+    } else {
+      foodsOutOfSeason.push(food);
+    }
+  });
+
   return (
-    <div className="grid grid-cols-2 gap-y-5 gap-x-5 sm:grid-cols-4 sm:gap-y-7 sm:gap-x-7 lg:grid-cols-6">
-      {foods.map((food) => (
-        <FoodCard key={food.id} food={food} />
-      ))}
+    <div>
+      {/* Month navigation */}
+      <div className="mt-14 sm:mt-20">
+        <div className="flex items-center justify-center gap-x-10">
+          <a href="">
+            <ArrowLeftCircleIcon className="h-10 w-10 stroke-neutral-500 hover:fill-green-50 hover:stroke-green-700" />
+          </a>
+          <div className="text-center">
+            <p className="font-bold tracking-wider text-green-700">
+              IN SEASON NOW
+            </p>
+            <h1 className="mt-1 text-3xl font-medium text-neutral-600">
+              {monthName}
+            </h1>
+          </div>
+          <a href="">
+            <ArrowRightCircleIcon className="h-10 w-10 stroke-neutral-500 hover:fill-green-50 hover:stroke-green-700" />
+          </a>
+        </div>
+        <FoodListSection foods={foodsInSeason} />
+      </div>
+      {/* Other food sections */}
+      <div className="mt-14 border-t-2 border-neutral-100 pt-10 sm:mt-20">
+        <div className="text-center">
+          <p className="font-bold tracking-wider text-amber-600">
+            IN SEASON NEXT MONTH
+          </p>
+          <h1 className="mt-1 text-3xl font-medium text-neutral-600">
+            {nextMonthName}
+          </h1>
+        </div>
+        <FoodListSection foods={foodsUpcoming} />
+      </div>
+      <div className="mt-14 border-t-2 border-neutral-100 pt-10 sm:mt-20">
+        <h1 className="text-center text-3xl font-medium text-neutral-500">
+          Out of Season
+        </h1>
+        <FoodListSection foods={foodsOutOfSeason} />
+      </div>
     </div>
   );
 }

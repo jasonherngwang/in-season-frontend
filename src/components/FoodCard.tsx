@@ -5,7 +5,7 @@ export default function FoodCard({ food }: { food: Food }) {
   return (
     <div className="group relative flex flex-col overflow-hidden rounded-lg shadow-md">
       {/* <a href="">
-        <PencilSquareIcon className="absolute top-1 right-1 h-6 w-6 text-gray-300 hover:text-gray-400" />
+        <PencilSquareIcon className="absolute top-1 right-1 h-6 w-6 text-neutral-300 hover:text-neutral-400" />
       </a> */}
       <div className="aspect-square">
         <img
@@ -20,7 +20,7 @@ export default function FoodCard({ food }: { food: Food }) {
       <div className="mt-auto">
         <a
           href={''}
-          className="m-2 flex items-center justify-center rounded-sm border border-transparent bg-neutral-100 py-2 px-2 text-sm font-medium text-gray-800 hover:bg-gray-200"
+          className="m-2 flex items-center justify-center rounded-sm border border-transparent bg-neutral-100 py-2 px-2 text-sm font-medium text-neutral-800 hover:bg-neutral-200"
         >
           Add to Basket
         </a>
