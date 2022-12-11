@@ -43,10 +43,6 @@ export default function Filters() {
     }
   };
 
-  // useEffect(() => {
-  //   dispatch(setFiltersAction(filterParams));
-  // }, [dispatch, filterParams]);
-
   return (
     <div className="mt-6 mb-10 grid grid-cols-1 gap-x-6 gap-y-4 sm:grid-cols-2">
       {/* Search input */}

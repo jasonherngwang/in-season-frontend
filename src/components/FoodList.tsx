@@ -1,7 +1,7 @@
+import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Food, FilterParams } from '../types';
-
 import { useStateValue } from '../state';
-
 import FoodListSection from './FoodListSection';
 
 import {
@@ -40,18 +40,32 @@ const filterFoods = (
   return sortAlphabetically(filteredFoods);
 };
 
-// Retrieve month info
-const now = new Date();
-const month = now.getMonth(); // Data are already 0-indexed
-const monthName = now.toLocaleString('default', { month: 'long' });
+const getMonthInfo = (monthNum: number) => {
+  // Normalization
+  while (monthNum < 0) monthNum += 12;
+  while (monthNum > 11) monthNum -= 12;
 
-const next = new Date();
-next.setMonth((month + 1) % 12);
-const nextMonth = next.getMonth();
-const nextMonthName = next.toLocaleString('default', { month: 'long' });
+  const year = new Date().getFullYear();
+  const month = new Date(year, monthNum);
+
+  return {
+    number: monthNum,
+    name: month.toLocaleString('default', { month: 'long' }),
+  };
+};
 
 export default function FoodList() {
   const [{ foods, filterParams }, _] = useStateValue();
+  const [month, setMonth] = useState(getMonthInfo(new Date().getMonth()));
+  const nextMonth = getMonthInfo(month.number + 1);
+
+  const incrementMonth = () => {
+    setMonth(getMonthInfo(month.number - 1));
+  };
+
+  const decrementMonth = () => {
+    setMonth(getMonthInfo(month.number + 1));
+  };
 
   // Partition foods by seasonality based on current and next month
   const foodsInSeason: Food[] = [];
@@ -59,9 +73,9 @@ export default function FoodList() {
   const foodsOutOfSeason: Food[] = [];
 
   filterFoods(foods, filterParams).forEach((food) => {
-    if (food.months.includes(month)) {
+    if (food.months.includes(month.number)) {
       foodsInSeason.push(food);
-    } else if (food.months.includes(nextMonth)) {
+    } else if (food.months.includes(nextMonth.number)) {
       foodsUpcoming.push(food);
     } else {
       foodsOutOfSeason.push(food);
@@ -73,20 +87,20 @@ export default function FoodList() {
       {/* Month navigation */}
       <div className="mt-14 sm:mt-20">
         <div className="flex items-center justify-center gap-x-10">
-          <a href="">
+          <button onClick={() => incrementMonth()}>
             <ArrowLeftCircleIcon className="h-10 w-10 stroke-neutral-500 hover:fill-green-50 hover:stroke-green-700" />
-          </a>
+          </button>
           <div className="text-center">
             <p className="font-bold tracking-wider text-green-700">
               IN SEASON NOW
             </p>
             <h1 className="mt-1 text-3xl font-medium text-neutral-600">
-              {monthName}
+              {month.name}
             </h1>
           </div>
-          <a href="">
+          <button onClick={() => decrementMonth()}>
             <ArrowRightCircleIcon className="h-10 w-10 stroke-neutral-500 hover:fill-green-50 hover:stroke-green-700" />
-          </a>
+          </button>
         </div>
         <FoodListSection foods={foodsInSeason} />
       </div>
@@ -97,7 +111,7 @@ export default function FoodList() {
             IN SEASON NEXT MONTH
           </p>
           <h1 className="mt-1 text-3xl font-medium text-neutral-600">
-            {nextMonthName}
+            {nextMonth.name}
           </h1>
         </div>
         <FoodListSection foods={foodsUpcoming} />
