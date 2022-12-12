@@ -4,11 +4,13 @@ export type User = {
   foods: Food[];
 } | null;
 
+export type MonthsInSeason = Record<string, boolean>;
+
 export type Food = {
   id: string;
   name: string;
   category: string;
-  months: number[];
+  months: MonthsInSeason;
   description?: string;
   imageUrl?: string;
 };

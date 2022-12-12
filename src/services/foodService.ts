@@ -7,6 +7,11 @@ const getAll = async () => {
   return response.data;
 };
 
+const getOne = async (id: string) => {
+  const response = await axios.get(`${baseUrl}/${id}`);
+  return response.data;
+};
+
 // const create = async (newObj) => {
 //   const config = {
 //     headers: { Authorization: token },
@@ -34,4 +39,4 @@ const getAll = async () => {
 //   return response.data
 // }
 
-export default { getAll };
+export default { getAll, getOne };

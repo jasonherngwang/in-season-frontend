@@ -10,7 +10,7 @@ import {
 } from 'react-router-dom';
 
 // Services
-import foodService from './services/foods';
+import foodService from './services/foodService';
 import loginService, { Token } from './services/loginService';
 
 // Components
@@ -47,6 +47,9 @@ export default function App() {
     console.log('Logged out');
   };
 
+  const match = useMatch('/foods/:id/edit');
+  const foodId = match ? match.params.id : null;
+
   // Fetch all food data on mount
   useEffect(() => {
     const fetchFoods = async () => {
@@ -64,7 +67,7 @@ export default function App() {
     <div className="mx-auto max-w-7xl border-2 px-4 pb-16 sm:px-6 lg:px-8">
       <Header handleLogout={handleLogout} />
       <Routes>
-        <Route path="/foods/edit" element={<EditFood />} />
+        <Route path="/foods/:id/edit" element={<EditFood foodId={foodId} />} />
         <Route path="/login" element={<Login handleLogin={handleLogin} />} />
         <Route
           path="/"

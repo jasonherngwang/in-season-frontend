@@ -1,4 +1,6 @@
 import { Food } from '../types';
+
+import { Link } from 'react-router-dom';
 // import { PencilSquareIcon } from '@heroicons/react/24/outline';
 
 export default function FoodCard({ food }: { food: Food }) {
@@ -7,16 +9,18 @@ export default function FoodCard({ food }: { food: Food }) {
       {/* <a href="">
         <PencilSquareIcon className="absolute top-1 right-1 h-6 w-6 text-neutral-300 hover:text-neutral-400" />
       </a> */}
-      <div className="aspect-square">
-        <img
-          src={food.imageUrl}
-          className="h-full w-full object-cover object-center sm:h-full sm:w-full"
-        />
-      </div>
-      <div className=" my-2 p-2 text-center">
-        <h3 className="text-lg font-medium text-neutral-700">{food.name}</h3>
-        <h4 className="italic text-neutral-400">{food.category}</h4>
-      </div>
+      <Link to={`${food.id}/edit`}>
+        <div className="aspect-square">
+          <img
+            src={food.imageUrl}
+            className="h-full w-full object-cover object-center sm:h-full sm:w-full"
+          />
+        </div>
+        <div className=" my-2 p-2 text-center">
+          <h3 className="text-lg font-medium text-neutral-700">{food.name}</h3>
+          <h4 className="italic text-neutral-400">{food.category}</h4>
+        </div>
+      </Link>
       <div className="mt-auto">
         <a
           href={''}

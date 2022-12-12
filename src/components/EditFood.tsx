@@ -1,27 +1,46 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useStateValue } from '../state';
+import foodService from '../services/foodService';
+import dateUtils from '../utils/dateUtils';
 
-import { Food } from '../types';
-
-import { Field, Formik, Form } from 'formik';
+// import { Field, Formik, Form } from 'formik';
 import { PhotoIcon, ArrowUpTrayIcon } from '@heroicons/react/24/outline';
 
-export default function EditFood({ food }: { food: Food }) {
-  food = {
-    name: 'a food',
-    category: 'vegetable',
-    description: 'vegetable',
-    months: [0, 1, 5, 9],
-    imageUrl: 'asdfasd',
-  };
-  const [name, setName] = useState(food.name);
-  const [category, setCategory] = useState(food.category);
-  const [description, setDescription] = useState(food.description);
-  const [months, setMonths] = useState(food.months);
-  const [imageUrl, setImageUrl] = useState(food.imageUrl);
+export default function EditFood({ foodId }: { foodId: any }) {
+  const [{ foods }, dispatch] = useStateValue();
+
+  const [name, setName] = useState('');
+  const [category, setCategory] = useState('');
+  const [description, setDescription] = useState('');
+  const [months, setMonths] = useState(dateUtils.defaultSeasonality);
+  const [imageUrl, setImageUrl] = useState('');
   const [error, setError] = useState('');
 
-  const navigate = useNavigate();
+  const toggleMonth = (monthNum: string, checked: boolean) => {
+    setMonths({
+      ...months,
+      [monthNum]: checked,
+    });
+  };
+
+  useEffect(() => {
+    const fetchFood = async () => {
+      try {
+        const food = foods.find((f) => f.id === foodId);
+        if (food) {
+          setName(food.name);
+          setCategory(food.category);
+          setDescription(food.description || '');
+          setMonths({ ...months, ...food.months });
+          setImageUrl(food.imageUrl || '');
+        }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    void fetchFood();
+  }, [foods, dispatch]);
 
   return (
     <div className="mx-auto mt-10 flex max-w-2xl flex-col items-center md:mt-20">
@@ -118,211 +137,34 @@ export default function EditFood({ food }: { food: Food }) {
                 Months in Season
               </label>
               <div className="mt-1 grid grid-cols-4 gap-y-2">
-                <div className="flex items-center">
-                  <input
-                    id="jan"
-                    name="jan"
-                    type="checkbox"
-                    checked={months.includes(0)}
-                    className="h-4 w-4 rounded border-neutral-300 text-green-600 focus:ring-green-600"
-                    onChange={() => {}}
-                  />
-                  <div className="ml-2">
-                    <label
-                      htmlFor="jan"
-                      className="text-sm font-medium text-neutral-600"
-                    >
-                      Jan
-                    </label>
-                  </div>
-                </div>
-                {/* <div className="flex items-center">
-                  <input
-                    id="feb"
-                    name="feb"
-                    type="checkbox"
-                    className="h-4 w-4 rounded border-neutral-300 text-green-600 focus:ring-green-600"
-                    onChange={() => {}}
-                  />
-                  <div className="ml-2">
-                    <label
-                      htmlFor="feb"
-                      className="text-sm font-medium text-neutral-600"
-                    >
-                      Feb
-                    </label>
-                  </div>
-                </div>
-                <div className="flex items-center">
-                  <input
-                    id="mar"
-                    name="mar"
-                    type="checkbox"
-                    className="h-4 w-4 rounded border-neutral-300 text-green-600 focus:ring-green-600"
-                    onChange={() => {}}
-                  />
-                  <div className="ml-2">
-                    <label
-                      htmlFor="mar"
-                      className="text-sm font-medium text-neutral-600"
-                    >
-                      Mar
-                    </label>
-                  </div>
-                </div>
-                <div className="flex items-center">
-                  <input
-                    id="apr"
-                    name="apr"
-                    type="checkbox"
-                    className="h-4 w-4 rounded border-neutral-300 text-green-600 focus:ring-green-600"
-                    onChange={() => {}}
-                  />
-                  <div className="ml-2">
-                    <label
-                      htmlFor="apr"
-                      className="text-sm font-medium text-neutral-600"
-                    >
-                      Apr
-                    </label>
-                  </div>
-                </div>
-                <div className="flex items-center">
-                  <input
-                    id="may"
-                    name="may"
-                    type="checkbox"
-                    className="h-4 w-4 rounded border-neutral-300 text-green-600 focus:ring-green-600"
-                    onChange={() => {}}
-                  />
-                  <div className="ml-2">
-                    <label
-                      htmlFor="may"
-                      className="text-sm font-medium text-neutral-600"
-                    >
-                      May
-                    </label>
-                  </div>
-                </div>
-                <div className="flex items-center">
-                  <input
-                    id="jun"
-                    name="jun"
-                    type="checkbox"
-                    className="h-4 w-4 rounded border-neutral-300 text-green-600 focus:ring-green-600"
-                    onChange={() => {}}
-                  />
-                  <div className="ml-2">
-                    <label
-                      htmlFor="jun"
-                      className="text-sm font-medium text-neutral-600"
-                    >
-                      Jun
-                    </label>
-                  </div>
-                </div>
-                <div className="flex items-center">
-                  <input
-                    id="jul"
-                    name="jul"
-                    type="checkbox"
-                    className="h-4 w-4 rounded border-neutral-300 text-green-600 focus:ring-green-600"
-                    onChange={() => {}}
-                  />
-                  <div className="ml-2">
-                    <label
-                      htmlFor="jul"
-                      className="text-sm font-medium text-neutral-600"
-                    >
-                      Jul
-                    </label>
-                  </div>
-                </div>
-                <div className="flex items-center">
-                  <input
-                    id="aug"
-                    name="aug"
-                    type="checkbox"
-                    className="h-4 w-4 rounded border-neutral-300 text-green-600 focus:ring-green-600"
-                    onChange={() => {}}
-                  />
-                  <div className="ml-2">
-                    <label
-                      htmlFor="aug"
-                      className="text-sm font-medium text-neutral-600"
-                    >
-                      Aug
-                    </label>
-                  </div>
-                </div>
-                <div className="flex items-center">
-                  <input
-                    id="sep"
-                    name="sep"
-                    type="checkbox"
-                    className="h-4 w-4 rounded border-neutral-300 text-green-600 focus:ring-green-600"
-                    onChange={() => {}}
-                  />
-                  <div className="ml-2">
-                    <label
-                      htmlFor="sep"
-                      className="text-sm font-medium text-neutral-600"
-                    >
-                      Sep
-                    </label>
-                  </div>
-                </div>
-                <div className="flex items-center">
-                  <input
-                    id="oct"
-                    name="oct"
-                    type="checkbox"
-                    className="h-4 w-4 rounded border-neutral-300 text-green-600 focus:ring-green-600"
-                    onChange={() => {}}
-                  />
-                  <div className="ml-2">
-                    <label
-                      htmlFor="oct"
-                      className="text-sm font-medium text-neutral-600"
-                    >
-                      Oct
-                    </label>
-                  </div>
-                </div>
-                <div className="flex items-center">
-                  <input
-                    id="nov"
-                    name="nov"
-                    type="checkbox"
-                    className="h-4 w-4 rounded border-neutral-300 text-green-600 focus:ring-green-600"
-                    onChange={() => {}}
-                  />
-                  <div className="ml-2">
-                    <label
-                      htmlFor="nov"
-                      className="text-sm font-medium text-neutral-600"
-                    >
-                      Nov
-                    </label>
-                  </div>
-                </div>
-                <div className="flex items-center">
-                  <input
-                    id="dec"
-                    name="dec"
-                    type="checkbox"
-                    className="h-4 w-4 rounded border-neutral-300 text-green-600 focus:ring-green-600"
-                    onChange={() => {}}
-                  />
-                  <div className="ml-2">
-                    <label
-                      htmlFor="dec"
-                      className="text-sm font-medium text-neutral-600"
-                    >
-                      Dec
-                    </label>
-                  </div>
-                </div> */}
+                {Object.keys(dateUtils.defaultSeasonality).map((m) => {
+                  const { shortName } = dateUtils.monthNumToAbbr(
+                    parseInt(m, 10)
+                  );
+
+                  return (
+                    <div key={m} className="flex items-center">
+                      <input
+                        id={shortName}
+                        name={shortName}
+                        type="checkbox"
+                        checked={months[m]}
+                        className="h-4 w-4 rounded border-neutral-300 text-green-600 focus:ring-green-600"
+                        onChange={() => {
+                          toggleMonth(m, !months[m]);
+                        }}
+                      />
+                      <div className="ml-2">
+                        <label
+                          htmlFor={shortName}
+                          className="text-sm font-medium text-neutral-600"
+                        >
+                          {shortName}
+                        </label>
+                      </div>
+                    </div>
+                  );
+                })}
               </div>
             </div>
             {error && (
@@ -335,7 +177,7 @@ export default function EditFood({ food }: { food: Food }) {
                 className="flex w-full justify-center rounded-md border-transparent bg-green-600 py-3 px-4 font-medium tracking-wider text-white hover:bg-green-500 focus:outline-none focus:ring-2 focus:ring-green-600 focus:ring-offset-2 active:bg-green-700"
                 type="submit"
               >
-                Update
+                Save
               </button>
             </div>
           </form>
