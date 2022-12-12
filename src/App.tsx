@@ -11,7 +11,8 @@ import {
 
 // Services
 import foodService from './services/foodService';
-import loginService, { Token } from './services/loginService';
+import loginService from './services/loginService';
+import { setToken, removeToken, Token } from './utils/tokenManagement';
 
 // Components
 import Header from './components/Header';
@@ -29,8 +30,7 @@ export default function App() {
   ): Promise<Token> => {
     try {
       const loggedInUser = await loginService.login({ username, password });
-      window.localStorage.setItem('user', JSON.stringify(loggedInUser));
-      loginService.setToken(loggedInUser.token);
+      setToken(loggedInUser);
       dispatch(setUserAction(loggedInUser));
       console.log('Logged in as ' + username);
       return loggedInUser;
@@ -41,8 +41,7 @@ export default function App() {
   };
 
   const handleLogout = () => {
-    window.localStorage.removeItem('user');
-    loginService.setToken(null);
+    removeToken();
     dispatch(setUserAction(null));
     console.log('Logged out');
   };
@@ -67,7 +66,14 @@ export default function App() {
     <div className="mx-auto max-w-7xl border-2 px-4 pb-16 sm:px-6 lg:px-8">
       <Header handleLogout={handleLogout} />
       <Routes>
-        <Route path="/foods/:id/edit" element={<EditFood foodId={foodId} />} />
+        <Route
+          path="/foods/:id/edit"
+          element={<EditFood foodId={foodId} action="edit" />}
+        />
+        <Route
+          path="/foods/add"
+          element={<EditFood foodId={''} action="add" />}
+        />
         <Route path="/login" element={<Login handleLogin={handleLogin} />} />
         <Route
           path="/"

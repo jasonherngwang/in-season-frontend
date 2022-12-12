@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { Token } from '../services/loginService';
+import { Token } from '../utils/tokenManagement';
 
 export default function Login({
   handleLogin,

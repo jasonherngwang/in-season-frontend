@@ -1,5 +1,8 @@
 import axios from 'axios';
 
+import { Food } from '../types';
+import { setToken, getToken, removeToken } from '../utils/tokenManagement';
+
 const baseUrl = '/api/foods';
 
 const getAll = async () => {
@@ -12,23 +15,43 @@ const getOne = async (id: string) => {
   return response.data;
 };
 
-// const create = async (newObj) => {
-//   const config = {
-//     headers: { Authorization: token },
-//   }
+const create = async (newFood: Food) => {
+  const config = {
+    headers: { Authorization: getToken() },
+  };
 
-//   const response = await axios.post(baseUrl, newObj, config)
-//   return response.data
-// }
+  try {
+    const response = await axios.post(
+      `${baseUrl}/${newFood.id}`,
+      newFood,
+      config
+    );
+    return response.data;
+  } catch (error) {
+    if (error instanceof Error) {
+      throw new Error(error.message);
+    }
+  }
+};
 
-// const update = async (newObj) => {
-//   const config = {
-//     headers: { Authorization: token },
-//   }
+const update = async (updatedFood: Food) => {
+  const config = {
+    headers: { Authorization: getToken() },
+  };
 
-//   const response = await axios.put(`${baseUrl}/${newObj.id}`, newObj, config)
-//   return response.data
-// }
+  try {
+    const response = await axios.put(
+      `${baseUrl}/${updatedFood.id}`,
+      updatedFood,
+      config
+    );
+    return response.data;
+  } catch (error) {
+    if (error instanceof Error) {
+      throw new Error(error.message);
+    }
+  }
+};
 
 // const deleteBlog = async (id) => {
 //   const config = {
@@ -39,4 +62,9 @@ const getOne = async (id: string) => {
 //   return response.data
 // }
 
-export default { getAll, getOne };
+export default {
+  getAll,
+  getOne,
+  create,
+  update,
+};

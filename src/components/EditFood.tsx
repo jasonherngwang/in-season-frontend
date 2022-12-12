@@ -1,27 +1,61 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useStateValue } from '../state';
+import { Food } from '../types';
 import foodService from '../services/foodService';
 import dateUtils from '../utils/dateUtils';
 
 // import { Field, Formik, Form } from 'formik';
 import { PhotoIcon, ArrowUpTrayIcon } from '@heroicons/react/24/outline';
 
-export default function EditFood({ foodId }: { foodId: any }) {
+export default function EditFood({
+  foodId,
+  action,
+}: {
+  foodId: any;
+  action: string;
+}) {
   const [{ foods }, dispatch] = useStateValue();
 
   const [name, setName] = useState('');
-  const [category, setCategory] = useState('');
+  const [category, setCategory] = useState('vegetable');
   const [description, setDescription] = useState('');
   const [months, setMonths] = useState(dateUtils.defaultSeasonality);
   const [imageUrl, setImageUrl] = useState('');
   const [error, setError] = useState('');
+
+  const navigate = useNavigate();
 
   const toggleMonth = (monthNum: string, checked: boolean) => {
     setMonths({
       ...months,
       [monthNum]: checked,
     });
+  };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+
+    const data: Food = {
+      id: foodId,
+      name,
+      category,
+      description,
+      months,
+      imageUrl,
+    };
+
+    try {
+      action === 'edit'
+        ? await foodService.update(data)
+        : await foodService.create(data);
+      navigate('/');
+    } catch (error) {
+      console.log(error);
+      if (error instanceof Error) {
+        setError("Only the food's creator can modify it.");
+      }
+    }
   };
 
   useEffect(() => {
@@ -44,7 +78,9 @@ export default function EditFood({ foodId }: { foodId: any }) {
 
   return (
     <div className="mx-auto mt-10 flex max-w-2xl flex-col items-center md:mt-20">
-      <h2 className="text-3xl font-bold text-neutral-700">Edit Food</h2>
+      <h2 className="text-3xl font-bold text-neutral-700">
+        {action === 'edit' ? 'Edit' : 'Add'} Food
+      </h2>
       <div className="mt-4 grid w-full gap-8 rounded-md bg-neutral-50 px-8 pt-8 pb-10 shadow-lg sm:grid-cols-5">
         {/* Image Upload */}
         <div className="max-w-[256px] sm:col-span-2">
@@ -68,7 +104,7 @@ export default function EditFood({ foodId }: { foodId: any }) {
         </div>
         {/* Form */}
         <div className="sm:col-span-3">
-          <form onSubmit={() => {}}>
+          <form onSubmit={handleSubmit}>
             <div>
               <label
                 htmlFor="name"
@@ -84,7 +120,9 @@ export default function EditFood({ foodId }: { foodId: any }) {
                   value={name}
                   required
                   className="block w-full appearance-none rounded-md border-neutral-300 shadow-sm focus:border-green-600 focus:ring-green-600 sm:max-w-sm"
-                  onChange={(e) => {}}
+                  onChange={(e) => {
+                    setName(e.target.value);
+                  }}
                 />
               </div>
             </div>
@@ -102,11 +140,15 @@ export default function EditFood({ foodId }: { foodId: any }) {
                   value={category}
                   required
                   className="block w-full appearance-none rounded-md border-neutral-300 shadow-sm focus:border-green-600 focus:ring-green-600 sm:max-w-sm"
-                  onChange={(e) => {}}
+                  onChange={(e) => {
+                    setCategory(e.target.value);
+                  }}
                 >
-                  <option>Vegetable</option>
-                  <option>Fruit</option>
-                  <option>Other</option>
+                  <option value="vegetable" selected>
+                    Vegetable
+                  </option>
+                  <option value="fruit">Fruit</option>
+                  <option value="other">Other</option>
                 </select>
               </div>
             </div>
@@ -125,7 +167,9 @@ export default function EditFood({ foodId }: { foodId: any }) {
                   value={description}
                   className="block w-full appearance-none rounded-md border-neutral-300 shadow-sm focus:border-green-600 focus:ring-green-600 sm:max-w-sm"
                   placeholder="Your notes on selecting and cooking with this ingredient"
-                  onChange={(e) => {}}
+                  onChange={(e) => {
+                    setDescription(e.target.value);
+                  }}
                 />
               </div>
             </div>
