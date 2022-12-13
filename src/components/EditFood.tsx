@@ -23,6 +23,7 @@ export default function EditFood({
   const [months, setMonths] = useState(dateUtils.defaultSeasonality);
   const [imageUrl, setImageUrl] = useState('');
   const [error, setError] = useState('');
+  const [uploadError, setUploadError] = useState('');
 
   const navigate = useNavigate();
 
@@ -31,6 +32,24 @@ export default function EditFood({
       ...months,
       [monthNum]: checked,
     });
+  };
+
+  const handleUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    e.preventDefault();
+
+    if (e.target.files && e.target.files.length) {
+      const file = e.target.files[0];
+      if (file.size > 5000) {
+        setUploadError('File must be < 5 KB');
+        return;
+      } else {
+        setUploadError('');
+        console.log(e.target.files[0]);
+        // setImageUrl(e.target.files[0].name);
+        setImageUrl('');
+      }
+    }
+    return true;
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -84,22 +103,43 @@ export default function EditFood({
       <div className="mt-4 grid w-full gap-8 rounded-md bg-neutral-50 px-8 pt-8 pb-10 shadow-lg sm:grid-cols-5">
         {/* Image Upload */}
         <div className="max-w-[256px] sm:col-span-2">
-          <h3 className="text-md font-medium text-neutral-500">Upload image</h3>
-          <div className="mt-1 flex aspect-square w-full items-center justify-center rounded-md border-2 bg-white object-cover object-center text-center">
-            <div className="flex flex-col items-center">
-              <PhotoIcon className="h-16 w-16 stroke-neutral-400" />
-              <p className="text-sm text-neutral-500">JPG, PNG, GIF, or WEBP</p>
-              <p className="text-sm text-neutral-500">Max size 5 MB</p>
+          <div className="mt-1 flex aspect-square w-full items-center justify-center text-center">
+            <div className="flex w-full flex-col">
+              <div className="flex w-full items-center justify-center">
+                <label
+                  htmlFor="upload"
+                  className="flex aspect-square w-full cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-neutral-200 bg-white hover:bg-neutral-50"
+                >
+                  {imageUrl ? (
+                    <img
+                      src={`/${imageUrl}`}
+                      className="w-full rounded-lg bg-white object-cover object-center hover:opacity-80"
+                    />
+                  ) : (
+                    <div className="flex flex-col items-center justify-center border-dashed p-4">
+                      <PhotoIcon className="h-16 w-16 stroke-neutral-400" />
+                      <p className="text-sm text-neutral-500">
+                        JPG, PNG, GIF, SVG
+                      </p>
+                      <p className="text-sm text-neutral-500">Max size 5 MB</p>
+                    </div>
+                  )}
+                  <input
+                    id="upload"
+                    type="file"
+                    accept="image/*"
+                    className="hidden"
+                    onChange={handleUpload}
+                  />
+                </label>
+              </div>
+              <p className="mt-1 text-sm text-neutral-500">
+                Click to upload or replace
+              </p>
+              {uploadError && (
+                <p className="mt-1 text-sm text-red-500">{uploadError}</p>
+              )}
             </div>
-          </div>
-          <div className="mt-4 flex w-full items-center justify-center">
-            <button
-              className="font-base flex justify-center rounded-md border-transparent bg-green-600 py-2 px-3 text-sm tracking-wider text-white hover:bg-green-500 focus:outline-none focus:ring-2 focus:ring-green-600 focus:ring-offset-2 active:bg-green-700"
-              type="submit"
-            >
-              <ArrowUpTrayIcon className="h-4 w-4" />
-              <span className="ml-2">Select file</span>
-            </button>
           </div>
         </div>
         {/* Form */}
@@ -144,9 +184,7 @@ export default function EditFood({
                     setCategory(e.target.value);
                   }}
                 >
-                  <option value="vegetable" selected>
-                    Vegetable
-                  </option>
+                  <option value="vegetable">Vegetable</option>
                   <option value="fruit">Fruit</option>
                   <option value="other">Other</option>
                 </select>

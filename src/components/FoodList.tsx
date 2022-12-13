@@ -73,9 +73,9 @@ export default function FoodList() {
   const foodsOutOfSeason: Food[] = [];
 
   filterFoods(foods, filterParams).forEach((food) => {
-    if (month.toString() in food.months) {
+    if (food.months[month.number]) {
       foodsInSeason.push(food);
-    } else if (nextMonth.toString() in food.months) {
+    } else if (food.months[nextMonth.number]) {
       foodsUpcoming.push(food);
     } else {
       foodsOutOfSeason.push(food);
