@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { useStateValue } from '../state';
 import { Food } from '../types';
 import foodService from '../services/foodService';
+import imageUploadService from '../services/imageUploadService';
 import dateUtils from '../utils/dateUtils';
 
 // import { Field, Formik, Form } from 'formik';
@@ -34,22 +35,27 @@ export default function EditFood({
     });
   };
 
-  const handleUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
 
     if (e.target.files && e.target.files.length) {
       const file = e.target.files[0];
-      if (file.size > 5000) {
+      if (file.size > 5 * 1024 * 1024) {
         setUploadError('File must be < 5 KB');
         return;
       } else {
-        setUploadError('');
-        console.log(e.target.files[0]);
-        // setImageUrl(e.target.files[0].name);
-        setImageUrl('');
+        const formData = new FormData();
+        formData.append('image', file);
+        const uploadedImage = await imageUploadService.upload(formData);
+        console.log(uploadedImage);
+        if (uploadedImage) {
+          setImageUrl(uploadedImage.imageUrl);
+          setUploadError('');
+        } else {
+          setUploadError('Error uploading file');
+        }
       }
     }
-    return true;
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -112,8 +118,8 @@ export default function EditFood({
                 >
                   {imageUrl ? (
                     <img
-                      src={`/${imageUrl}`}
-                      className="w-full rounded-lg bg-white object-cover object-center hover:opacity-80"
+                      src={`${imageUrl}`}
+                      className="h-full w-full rounded-lg bg-white object-cover object-center hover:opacity-80"
                     />
                   ) : (
                     <div className="flex flex-col items-center justify-center border-dashed p-4">
