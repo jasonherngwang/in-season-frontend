@@ -3,11 +3,14 @@ import { Food } from '../types';
 import { Link } from 'react-router-dom';
 import { PencilSquareIcon } from '@heroicons/react/24/outline';
 
-const formatName = (name: string) => {
-  return name
-    .split('_')
-    .map((str) => str[0].toUpperCase() + str.slice(1))
-    .join(' ');
+const capitalize = (name: string) => {
+  if (!name) {
+    return name;
+  }
+  if (name.length === 1) {
+    return name.toUpperCase();
+  }
+  return name[0].toUpperCase() + name.slice(1);
 };
 
 export default function FoodCard({ food }: { food: Food }) {
@@ -19,16 +22,16 @@ export default function FoodCard({ food }: { food: Food }) {
           <div className="aspect-square">
             {/* <LazyImage src={food.imageUrl} alt={food.imageUrl} /> */}
             <img
-              src={`/${food.imageUrl}`}
+              src={`${food.imageUrl}`}
               className="w-full object-cover object-center sm:h-full sm:w-full"
             />
           </div>
           <div className="px-2 pt-1 text-center ">
             <h3 className="text-lg font-medium text-neutral-700">
-              {formatName(food.name)}
+              {food.name}
             </h3>
             <h4 className="text-sm italic text-neutral-400">
-              {formatName(food.category)}
+              {capitalize(food.category)}
             </h4>
           </div>
         </div>

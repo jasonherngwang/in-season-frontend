@@ -119,7 +119,7 @@ export default function EditFood({
       </h2>
       <div className="mt-4 grid w-full gap-8 rounded-md bg-neutral-50 px-8 pt-8 pb-10 shadow-lg sm:grid-cols-5">
         {/* Image Upload */}
-        <div className="flex max-w-[256px] flex-col items-center text-center sm:col-span-2">
+        <div className="mx-auto flex w-full max-w-[200px] flex-col items-center text-center sm:col-span-2">
           {/* Image */}
           <label htmlFor="upload" className="w-full cursor-pointer">
             {uploading ? (
@@ -128,7 +128,7 @@ export default function EditFood({
               </div>
             ) : imageUrl ? (
               <img
-                src={`/${imageUrl}`}
+                src={imageUrl}
                 className="aspect-square h-full w-full rounded-lg bg-white object-cover object-center hover:opacity-80"
               />
             ) : (
@@ -146,7 +146,6 @@ export default function EditFood({
               onChange={handleUpload}
             />
           </label>
-
           {/* Caption */}
           <p className="mt-1 text-sm text-neutral-500">Click image to upload</p>
           {uploadError && (
