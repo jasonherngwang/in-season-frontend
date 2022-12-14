@@ -53,18 +53,25 @@ const update = async (updatedFood: Food) => {
   }
 };
 
-// const deleteBlog = async (id) => {
-//   const config = {
-//     headers: { Authorization: token },
-//   }
+const deleteFood = async (id: string) => {
+  const config = {
+    headers: { Authorization: getToken() },
+  };
 
-//   const response = await axios.delete(`${baseUrl}/${id}`, config)
-//   return response.data
-// }
+  try {
+    await axios.delete(`${baseUrl}/${id}`, config);
+    return;
+  } catch (error) {
+    if (error instanceof Error) {
+      throw new Error(error.message);
+    }
+  }
+};
 
 export default {
   getAll,
   getOne,
   create,
   update,
+  deleteFood,
 };
