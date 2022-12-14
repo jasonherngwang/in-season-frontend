@@ -22,6 +22,7 @@ import Filters from './components/Filters';
 import FoodList from './components/FoodList';
 import EditFood from './components/EditFood';
 import Login from './components/Login';
+import Plans from './components/Plans';
 
 export default function App() {
   const [, dispatch] = useStateValue();
@@ -95,6 +96,7 @@ export default function App() {
             </>
           }
         />
+        <Route path="/plans" element={<Plans />} />
       </Routes>
     </div>
   );
