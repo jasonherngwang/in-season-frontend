@@ -1,17 +1,16 @@
+import { FOODS_URL } from '../constants';
 import axios from 'axios';
 
 import { Food } from '../types';
-import { setToken, getToken, removeToken } from '../utils/tokenManagement';
-
-const baseUrl = '/api/foods';
+import { getToken } from '../utils/tokenManagement';
 
 const getAll = async () => {
-  const response = await axios.get(baseUrl);
+  const response = await axios.get(FOODS_URL);
   return response.data;
 };
 
 const getOne = async (id: string) => {
-  const response = await axios.get(`${baseUrl}/${id}`);
+  const response = await axios.get(`${FOODS_URL}/${id}`);
   return response.data;
 };
 
@@ -22,7 +21,7 @@ const create = async (newFood: Food) => {
 
   try {
     const response = await axios.post(
-      `${baseUrl}/${newFood.id}`,
+      `${FOODS_URL}/${newFood.id}`,
       newFood,
       config
     );
@@ -41,7 +40,7 @@ const update = async (updatedFood: Food) => {
 
   try {
     const response = await axios.put(
-      `${baseUrl}/${updatedFood.id}`,
+      `${FOODS_URL}/${updatedFood.id}`,
       updatedFood,
       config
     );
@@ -59,7 +58,7 @@ const deleteFood = async (id: string) => {
   };
 
   try {
-    await axios.delete(`${baseUrl}/${id}`, config);
+    await axios.delete(`${FOODS_URL}/${id}`, config);
     return;
   } catch (error) {
     if (error instanceof Error) {

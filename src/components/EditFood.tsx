@@ -5,6 +5,7 @@ import { Food } from '../types';
 import foodService from '../services/foodService';
 import imageUploadService from '../services/imageUploadService';
 import dateUtils from '../utils/dateUtils';
+import { tokenExpired } from '../utils/tokenManagement';
 
 import { PhotoIcon } from '@heroicons/react/24/outline';
 import Spinner from '../icons/Spinner';
@@ -24,7 +25,7 @@ export default function EditFood({
   const [description, setDescription] = useState('');
   const [months, setMonths] = useState(dateUtils.defaultSeasonality);
   const [imageUrl, setImageUrl] = useState('');
-  const [error, setError] = useState('');
+  const [message, setMessage] = useState({ text: '', type: '' });
   const [uploadError, setUploadError] = useState('');
   const [uploading, setUploading] = useState(false);
 
@@ -73,6 +74,13 @@ export default function EditFood({
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
+    if (tokenExpired()) {
+      setMessage({
+        text: 'Please login again.',
+        type: 'error',
+      });
+    }
+
     const data: Food = {
       id: foodId,
       name,
@@ -86,10 +94,16 @@ export default function EditFood({
       action === 'edit'
         ? await foodService.update(data)
         : await foodService.create(data);
-      navigate('/');
+      setMessage({
+        text: 'Details successfully updated.',
+        type: 'success',
+      });
     } catch (error) {
       if (error instanceof Error) {
-        setError("Only the food's creator can modify it.");
+        setMessage({
+          text: "Only the food's creator can modify it.",
+          type: 'error',
+        });
       }
     }
   };
@@ -105,7 +119,10 @@ export default function EditFood({
         navigate('/');
       } catch (error) {
         if (error instanceof Error && error.message.includes('401')) {
-          setError("Only the food's creator can delete it.");
+          setMessage({
+            text: "Only the food's creator can delete it.",
+            type: 'error',
+          });
         }
       }
     }
@@ -276,9 +293,15 @@ export default function EditFood({
                 })}
               </div>
             </div>
-            {error && (
+            {message.text && (
               <div className="mt-1">
-                <p className="text-red-500">{error}</p>
+                <p
+                  className={
+                    message.type === 'error' ? 'text-red-500' : 'text-green-600'
+                  }
+                >
+                  {message.text}
+                </p>
               </div>
             )}
             <div className="mt-8 flex w-full gap-x-3 sm:gap-x-6">
@@ -298,15 +321,17 @@ export default function EditFood({
           </form>
         </div>
       </div>
-      <div className="mt-6">
-        <button
-          className="text-sm text-neutral-500 hover:underline"
-          type="button"
-          onClick={handleDelete}
-        >
-          Delete Food
-        </button>
-      </div>
+      {action === 'edit' && (
+        <div className="mt-6">
+          <button
+            className="text-sm text-neutral-500 hover:underline"
+            type="button"
+            onClick={handleDelete}
+          >
+            Delete Food
+          </button>
+        </div>
+      )}
     </div>
   );
 }

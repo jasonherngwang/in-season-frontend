@@ -37,4 +37,5 @@ export const StateProvider = ({ reducer, children }: StateProviderProps) => {
     </StateContext.Provider>
   );
 };
+
 export const useStateValue = () => useContext(StateContext);

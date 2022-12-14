@@ -1,14 +1,21 @@
-import { Navigate } from 'react-router-dom';
-import { User } from '../types';
+import { Navigate, useLocation } from 'react-router-dom';
+
+import { tokenExpired } from '../utils/tokenManagement';
 
 type ProtectedRouteProps = {
-  user: User;
-  children: any;
+  redirectPath?: string;
+  children?: any;
 };
 
-const ProtectedRoute = ({ user, children }: ProtectedRouteProps) => {
-  if (!user) {
-    return <Navigate to="/" replace />;
+const ProtectedRoute = ({
+  redirectPath = '/login',
+  children,
+}: ProtectedRouteProps) => {
+  const location = useLocation();
+
+  if (tokenExpired()) {
+    // Use `state` to remember the route originally requested
+    return <Navigate to={redirectPath} replace state={{ from: location }} />;
   }
 
   return children;

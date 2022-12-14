@@ -1,6 +1,5 @@
+import { LOGIN_URL } from '../constants';
 import axios from 'axios';
-
-const baseUrl = '/api/login';
 
 type CredentialsProps = {
   username: string;
@@ -8,7 +7,7 @@ type CredentialsProps = {
 };
 
 const login = async (credentials: CredentialsProps) => {
-  const response = await axios.post(baseUrl, credentials);
+  const response = await axios.post(LOGIN_URL, credentials);
   return response.data;
 };
 

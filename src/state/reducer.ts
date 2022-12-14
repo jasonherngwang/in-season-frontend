@@ -31,6 +31,7 @@ export const reducer = (state: State, action: Action): State => {
   }
 };
 
+// Action creators
 export const setFoodsAction = (foods: Food[]): Action => {
   return {
     type: 'SET_FOODS',

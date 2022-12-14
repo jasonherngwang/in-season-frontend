@@ -1,19 +1,11 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useStateValue, setFoodsAction, setUserAction } from './state';
-import {
-  Routes,
-  Route,
-  Link,
-  Navigate,
-  useNavigate,
-  useMatch,
-  useLocation,
-} from 'react-router-dom';
+import { Routes, Route, Outlet, useMatch, useLocation } from 'react-router-dom';
 
 // Services
 import foodService from './services/foodService';
 import loginService from './services/loginService';
-import { setToken, removeToken, Token, getUser } from './utils/tokenManagement';
+import { setToken, removeToken } from './utils/tokenManagement';
 
 // Components
 import ProtectedRoute from './components/ProtectedRoute';
@@ -27,20 +19,14 @@ import Plans from './components/Plans';
 export default function App() {
   const [, dispatch] = useStateValue();
   const location = useLocation();
-  // const navigate = useNavigate();
 
-  const handleLogin = async (
-    username: string,
-    password: string
-  ): Promise<Token> => {
+  const handleLogin = async (username: string, password: string) => {
     try {
       const loggedInUser = await loginService.login({ username, password });
       setToken(loggedInUser);
       dispatch(setUserAction(loggedInUser));
-      console.log('Logged in as ' + username);
       return loggedInUser;
     } catch (error) {
-      console.error('Incorrect credentials', error);
       return null;
     }
   };
@@ -48,7 +34,6 @@ export default function App() {
   const handleLogout = () => {
     removeToken();
     dispatch(setUserAction(null));
-    console.log('Logged out');
   };
 
   const match = useMatch('/foods/:id/edit');
@@ -70,11 +55,12 @@ export default function App() {
   return (
     <div className="mx-auto max-w-7xl px-4 pb-16 sm:px-6 lg:px-8">
       <Header handleLogout={handleLogout} />
+
       <Routes>
         <Route
           path="/foods/:id/edit"
           element={
-            <ProtectedRoute user={getUser()}>
+            <ProtectedRoute>
               <EditFood foodId={foodId} action="edit" />
             </ProtectedRoute>
           }
@@ -82,13 +68,15 @@ export default function App() {
         <Route
           path="/foods/add"
           element={
-            <ProtectedRoute user={getUser()}>
+            <ProtectedRoute>
               <EditFood foodId={''} action="add" />
             </ProtectedRoute>
           }
         />
+
         <Route path="/login" element={<Login handleLogin={handleLogin} />} />
         <Route
+          index
           path="/"
           element={
             <>

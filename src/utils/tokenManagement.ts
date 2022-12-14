@@ -1,3 +1,5 @@
+import jwtDecode, { JwtPayload } from 'jwt-decode';
+
 export type Token = {
   token: string;
   username: string;
@@ -20,13 +22,26 @@ export const setToken = (loggedInUser: LoggedInUser) => {
 
 export const getToken = () => {
   const user = window.localStorage.getItem('user');
-  if (user) {
+  if (user !== null) {
     return JSON.parse(user).token;
   }
+  return null;
 };
 
 export const removeToken = () => {
   window.localStorage.removeItem('user');
+};
+
+export const tokenExpired = () => {
+  const token = getToken();
+  if (token === null) return true;
+
+  const { exp } = jwtDecode<JwtPayload>(token);
+  const now = new Date().getTime() / 1000;
+  if (exp) {
+    return now > exp;
+  }
+  return false;
 };
 
 export const getUser = () => {
