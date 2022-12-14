@@ -27,6 +27,7 @@ import Plans from './components/Plans';
 export default function App() {
   const [, dispatch] = useStateValue();
   const location = useLocation();
+  // const navigate = useNavigate();
 
   const handleLogin = async (
     username: string,

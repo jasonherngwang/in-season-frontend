@@ -10,6 +10,7 @@
     "svgr": "svgr -d src/icons/ src/assets/"
   },
   "dependencies": {
+    "@headlessui/react": "^1.7.5",
     "@heroicons/react": "^2.0.13",
     "@types/react-router-dom": "^5.3.3",
     "axios": "^1.2.1",
