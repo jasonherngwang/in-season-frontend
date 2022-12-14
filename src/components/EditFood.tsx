@@ -155,7 +155,10 @@ export default function EditFood({
         {/* Image Upload */}
         <div className="mx-auto flex w-full max-w-[200px] flex-col items-center text-center sm:col-span-2">
           {/* Image */}
-          <label htmlFor="upload" className="w-full cursor-pointer">
+          <label
+            htmlFor="upload"
+            className="aspect-square w-full cursor-pointer"
+          >
             {uploading ? (
               <div className="flex aspect-square h-full w-full items-center justify-center rounded-lg bg-white">
                 <Spinner />
@@ -163,7 +166,7 @@ export default function EditFood({
             ) : imageUrl ? (
               <img
                 src={imageUrl}
-                className="aspect-square h-full w-full rounded-lg bg-white object-cover object-center hover:opacity-80"
+                className="h-full w-full rounded-lg bg-white object-contain object-center hover:opacity-80"
               />
             ) : (
               <div className="flex aspect-square h-full w-full flex-col items-center justify-center rounded-lg border-2 border-dashed border-neutral-200 bg-white p-4 hover:border-neutral-300 hover:bg-neutral-50">
@@ -309,7 +312,7 @@ export default function EditFood({
                 to="/"
                 className="flex w-full justify-center rounded-md border-transparent bg-neutral-200 py-3 px-4 font-medium tracking-wider text-neutral-900 hover:bg-neutral-300 focus:outline-none focus:ring-2 focus:ring-neutral-600 focus:ring-offset-2 active:bg-neutral-400"
               >
-                Cancel
+                Go Back
               </Link>
               <button
                 className="flex w-full justify-center rounded-md border-transparent bg-green-600 py-3 px-4 font-medium tracking-wider text-white hover:bg-green-500 focus:outline-none focus:ring-2 focus:ring-green-600 focus:ring-offset-2 active:bg-green-700"
