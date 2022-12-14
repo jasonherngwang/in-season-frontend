@@ -1,13 +1,14 @@
 import { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 
-import { Token } from '../utils/tokenManagement';
+import { useStateValue, setUserAction } from '../state';
 
-type LoginProps = {
-  handleLogin: (username: string, password: string) => Promise<Token>;
-};
+import loginService from '../services/loginService';
+import { setToken } from '../utils/tokenManagement';
 
-export default function Login({ handleLogin }: LoginProps) {
+export default function Login() {
+  const [, dispatch] = useStateValue();
+
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -15,17 +16,25 @@ export default function Login({ handleLogin }: LoginProps) {
   const navigate = useNavigate();
   const location = useLocation();
 
-  // If successful, redirect to home page. Else, display error message
   const login = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    const user = await handleLogin(username, password);
-    if (user) {
-      // Redirect user to the route originally requested
-      const origin = location.state?.from?.pathname || '/';
-      navigate(origin);
-    } else {
-      setError('Incorrect username and/or password.');
+    try {
+      const loggedInUser = await loginService.login({ username, password });
+      if (loggedInUser) {
+        setToken(loggedInUser); // Store token in localStorage
+        dispatch(setUserAction(loggedInUser)); // Update global state
+        // Redirect user to the route originally requested
+        const origin = location.state?.from?.pathname || '/';
+        navigate(origin);
+      } else {
+        setError('Incorrect username and/or password.');
+      }
+    } catch (error) {
+      if (error instanceof Error) {
+        setError('Incorrect username and/or password.');
+      }
+      return null;
     }
   };
 

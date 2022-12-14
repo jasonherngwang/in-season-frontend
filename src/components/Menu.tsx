@@ -1,9 +1,10 @@
 import { Fragment } from 'react';
 import { Link } from 'react-router-dom';
+
+import { getUser, removeToken } from '../utils/tokenManagement';
+import { setUserAction, useStateValue } from '../state';
+
 import clsx from 'clsx';
-
-import { getUser } from '../utils/tokenManagement';
-
 import { Menu, Transition } from '@headlessui/react';
 import { Bars3Icon } from '@heroicons/react/24/outline';
 
@@ -13,11 +14,14 @@ const links = [
   { href: '/plans', label: 'Plans' },
 ];
 
-export default function SideMenu({
-  handleLogout,
-}: {
-  handleLogout: () => void;
-}) {
+export default function SideMenu() {
+  const [, dispatch] = useStateValue();
+
+  const logout = () => {
+    removeToken();
+    dispatch(setUserAction(null));
+  };
+
   return (
     <Menu as="div" className="relative">
       <Menu.Button>
@@ -51,7 +55,7 @@ export default function SideMenu({
               getUser() ? (
                 <Link
                   to="/"
-                  onClick={handleLogout}
+                  onClick={logout}
                   className={clsx('block bg-white px-4 py-3 text-neutral-700', {
                     'text-green-600': active,
                   })}

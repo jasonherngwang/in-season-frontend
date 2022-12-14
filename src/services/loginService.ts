@@ -1,4 +1,4 @@
-import { LOGIN_URL } from '../constants';
+import { LOGIN_URL, USERS_URL } from '../constants';
 import axios from 'axios';
 
 type CredentialsProps = {
@@ -11,4 +11,9 @@ const login = async (credentials: CredentialsProps) => {
   return response.data;
 };
 
-export default { login };
+const signup = async (credentials: CredentialsProps) => {
+  const response = await axios.post(USERS_URL, credentials);
+  return response.data;
+};
+
+export default { login, signup };

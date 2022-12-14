@@ -3,13 +3,13 @@ import { Link } from 'react-router-dom';
 import Menu from './Menu';
 import { ShoppingBagIcon } from '@heroicons/react/24/outline';
 
-export default function Header({ handleLogout }: { handleLogout: () => void }) {
+export default function Header() {
   return (
     <header className="py-8">
       <nav>
         <ul className="flex items-center">
           <li className="flex-1">
-            <Menu handleLogout={handleLogout} />
+            <Menu />
           </li>
           <li className="flex flex-1 flex-shrink-0 justify-center">
             <Link to="/">
