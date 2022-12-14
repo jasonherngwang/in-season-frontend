@@ -6,9 +6,10 @@ import foodService from '../services/foodService';
 import imageUploadService from '../services/imageUploadService';
 import dateUtils from '../utils/dateUtils';
 
-// import { Field, Formik, Form } from 'formik';
-import { PhotoIcon, ArrowUpTrayIcon } from '@heroicons/react/24/outline';
+import { PhotoIcon } from '@heroicons/react/24/outline';
+import Spinner from '../icons/Spinner';
 
+// Reuse same form for adding and editing, via `action` prop
 export default function EditFood({
   foodId,
   action,
@@ -25,6 +26,7 @@ export default function EditFood({
   const [imageUrl, setImageUrl] = useState('');
   const [error, setError] = useState('');
   const [uploadError, setUploadError] = useState('');
+  const [uploading, setUploading] = useState(false);
 
   const navigate = useNavigate();
 
@@ -41,18 +43,28 @@ export default function EditFood({
     if (e.target.files && e.target.files.length) {
       const file = e.target.files[0];
       if (file.size > 5 * 1024 * 1024) {
-        setUploadError('File must be < 5 KB');
+        setUploadError('File must be < 5 MB');
         return;
-      } else {
-        const formData = new FormData();
-        formData.append('image', file);
+      }
+
+      const formData = new FormData();
+      formData.append('image', file);
+
+      try {
+        setUploading(true); // Display spinner icon
         const uploadedImage = await imageUploadService.upload(formData);
-        console.log(uploadedImage);
+
         if (uploadedImage) {
-          setImageUrl(uploadedImage.imageUrl);
+          setImageUrl(uploadedImage.imageUrl); // Display new image if upload succeeds
           setUploadError('');
         } else {
           setUploadError('Error uploading file');
+        }
+        setUploading(false); // Clear spinner
+      } catch (error) {
+        setUploading(false);
+        if (error instanceof Error) {
+          setUploadError(error.message);
         }
       }
     }
@@ -76,7 +88,6 @@ export default function EditFood({
         : await foodService.create(data);
       navigate('/');
     } catch (error) {
-      console.log(error);
       if (error instanceof Error) {
         setError("Only the food's creator can modify it.");
       }
@@ -108,45 +119,39 @@ export default function EditFood({
       </h2>
       <div className="mt-4 grid w-full gap-8 rounded-md bg-neutral-50 px-8 pt-8 pb-10 shadow-lg sm:grid-cols-5">
         {/* Image Upload */}
-        <div className="max-w-[256px] sm:col-span-2">
-          <div className="mt-1 flex aspect-square w-full items-center justify-center text-center">
-            <div className="flex w-full flex-col">
-              <div className="flex w-full items-center justify-center">
-                <label
-                  htmlFor="upload"
-                  className="flex aspect-square w-full cursor-pointer flex-col items-center justify-center rounded-lg border-2 border-neutral-200 bg-white hover:bg-neutral-50"
-                >
-                  {imageUrl ? (
-                    <img
-                      src={`${imageUrl}`}
-                      className="h-full w-full rounded-lg bg-white object-cover object-center hover:opacity-80"
-                    />
-                  ) : (
-                    <div className="flex flex-col items-center justify-center border-dashed p-4">
-                      <PhotoIcon className="h-16 w-16 stroke-neutral-400" />
-                      <p className="text-sm text-neutral-500">
-                        JPG, PNG, GIF, SVG
-                      </p>
-                      <p className="text-sm text-neutral-500">Max size 5 MB</p>
-                    </div>
-                  )}
-                  <input
-                    id="upload"
-                    type="file"
-                    accept="image/*"
-                    className="hidden"
-                    onChange={handleUpload}
-                  />
-                </label>
+        <div className="flex max-w-[256px] flex-col items-center text-center sm:col-span-2">
+          {/* Image */}
+          <label htmlFor="upload" className="w-full cursor-pointer">
+            {uploading ? (
+              <div className="flex aspect-square h-full w-full items-center justify-center rounded-lg bg-white">
+                <Spinner />
               </div>
-              <p className="mt-1 text-sm text-neutral-500">
-                Click to upload or replace
-              </p>
-              {uploadError && (
-                <p className="mt-1 text-sm text-red-500">{uploadError}</p>
-              )}
-            </div>
-          </div>
+            ) : imageUrl ? (
+              <img
+                src={`/${imageUrl}`}
+                className="aspect-square h-full w-full rounded-lg bg-white object-cover object-center hover:opacity-80"
+              />
+            ) : (
+              <div className="flex aspect-square h-full w-full flex-col items-center justify-center rounded-lg border-2 border-dashed border-neutral-200 bg-white p-4 hover:border-neutral-300 hover:bg-neutral-50">
+                <PhotoIcon className="h-16 w-16 stroke-neutral-400" />
+                <p className="text-sm text-neutral-500">JPG, PNG, GIF, SVG</p>
+                <p className="text-sm text-neutral-500">Max size 5 MB</p>
+              </div>
+            )}
+            <input
+              id="upload"
+              type="file"
+              accept="image/*"
+              className="hidden"
+              onChange={handleUpload}
+            />
+          </label>
+
+          {/* Caption */}
+          <p className="mt-1 text-sm text-neutral-500">Click image to upload</p>
+          {uploadError && (
+            <p className="mt-1 text-sm text-red-500">{uploadError}</p>
+          )}
         </div>
         {/* Form */}
         <div className="sm:col-span-3">

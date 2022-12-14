@@ -28,3 +28,10 @@ export const getToken = () => {
 export const removeToken = () => {
   window.localStorage.removeItem('user');
 };
+
+export const getUser = () => {
+  const user = window.localStorage.getItem('user');
+  if (user) {
+    return JSON.parse(user);
+  }
+};

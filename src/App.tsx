@@ -7,14 +7,16 @@ import {
   Navigate,
   useNavigate,
   useMatch,
+  useLocation,
 } from 'react-router-dom';
 
 // Services
 import foodService from './services/foodService';
 import loginService from './services/loginService';
-import { setToken, removeToken, Token } from './utils/tokenManagement';
+import { setToken, removeToken, Token, getUser } from './utils/tokenManagement';
 
 // Components
+import ProtectedRoute from './components/ProtectedRoute';
 import Header from './components/Header';
 import Filters from './components/Filters';
 import FoodList from './components/FoodList';
@@ -23,6 +25,7 @@ import Login from './components/Login';
 
 export default function App() {
   const [, dispatch] = useStateValue();
+  const location = useLocation();
 
   const handleLogin = async (
     username: string,
@@ -60,7 +63,7 @@ export default function App() {
       }
     };
     void fetchFoods();
-  }, [dispatch]);
+  }, [dispatch, location]);
 
   return (
     <div className="mx-auto max-w-7xl px-4 pb-16 sm:px-6 lg:px-8">
@@ -68,11 +71,19 @@ export default function App() {
       <Routes>
         <Route
           path="/foods/:id/edit"
-          element={<EditFood foodId={foodId} action="edit" />}
+          element={
+            <ProtectedRoute user={getUser()}>
+              <EditFood foodId={foodId} action="edit" />
+            </ProtectedRoute>
+          }
         />
         <Route
           path="/foods/add"
-          element={<EditFood foodId={''} action="add" />}
+          element={
+            <ProtectedRoute user={getUser()}>
+              <EditFood foodId={''} action="add" />
+            </ProtectedRoute>
+          }
         />
         <Route path="/login" element={<Login handleLogin={handleLogin} />} />
         <Route
