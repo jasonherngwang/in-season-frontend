@@ -30,8 +30,8 @@ export default function Login({ handleLogin }: LoginProps) {
   };
 
   return (
-    <div className="mx-auto mt-24 flex max-w-md flex-col items-center">
-      <h2 className="text-3xl font-bold text-neutral-700">Login</h2>
+    <div className="mx-auto mt-6 flex max-w-md flex-col items-center md:mt-20">
+      <h2 className="text-2xl font-bold text-neutral-700 md:text-3xl">Login</h2>
       {/* Card */}
       <div className="mt-8 w-full rounded-md bg-neutral-50 px-8 pt-8 pb-10 shadow-lg">
         <form onSubmit={login}>
@@ -80,7 +80,7 @@ export default function Login({ handleLogin }: LoginProps) {
           )}
           <div className="mt-8">
             <button
-              className="flex w-full justify-center rounded-md border-transparent bg-green-600 py-3 px-4 font-medium uppercase tracking-wider text-white hover:bg-green-500 focus:outline-none focus:ring-2 focus:ring-green-600 focus:ring-offset-2 active:bg-green-700"
+              className="flex w-full justify-center rounded-md border-transparent bg-green-600 py-3 px-4 font-medium tracking-wider text-white hover:bg-green-500 focus:outline-none focus:ring-2 focus:ring-green-600 focus:ring-offset-2 active:bg-green-700"
               type="submit"
             >
               Login

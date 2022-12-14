@@ -205,8 +205,9 @@ export default function EditFood({
                   name="name"
                   id="name"
                   value={name}
+                  placeholder="Food name"
                   required
-                  className="block w-full appearance-none rounded-md border-neutral-300 shadow-sm focus:border-green-600 focus:ring-green-600 sm:max-w-md"
+                  className="block w-full appearance-none rounded-md border-neutral-300 shadow-sm placeholder:text-neutral-400 focus:border-green-600 focus:ring-green-600 sm:max-w-md"
                   onChange={(e) => {
                     setName(e.target.value);
                   }}
@@ -250,7 +251,7 @@ export default function EditFood({
                   id="description"
                   rows={4}
                   value={description}
-                  className="block w-full appearance-none rounded-md border-neutral-300 shadow-sm focus:border-green-600 focus:ring-green-600 sm:max-w-md"
+                  className="block w-full appearance-none rounded-md border-neutral-300 shadow-sm placeholder:text-neutral-400 focus:border-green-600 focus:ring-green-600 sm:max-w-md"
                   placeholder="Notes on selecting and cooking with this ingredient"
                   onChange={(e) => {
                     setDescription(e.target.value);
