@@ -1,9 +1,14 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import { useStateValue, setUserAction } from '../state';
+
 import loginService from '../services/loginService';
+import { setToken } from '../utils/tokenManagement';
 
 export default function Login() {
+  const [, dispatch] = useStateValue();
+
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
@@ -16,6 +21,9 @@ export default function Login() {
     try {
       const registeredUser = await loginService.signup({ username, password });
       if (registeredUser) {
+        const loggedInUser = await loginService.login({ username, password });
+        setToken(loggedInUser);
+        dispatch(setUserAction(loggedInUser));
         navigate('/');
       } else {
         setError('Invalid username and/or password.');
