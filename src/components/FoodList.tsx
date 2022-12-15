@@ -1,5 +1,4 @@
-import { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useState } from 'react';
 import { Food, FilterParams } from '../types';
 import { useStateValue } from '../state';
 import FoodListSection from './FoodListSection';

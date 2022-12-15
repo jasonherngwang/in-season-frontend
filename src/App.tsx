@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useStateValue, setFoodsAction } from './state';
 import { Routes, Route, useMatch, useLocation } from 'react-router-dom';
 
@@ -9,6 +9,7 @@ import Header from './components/Header';
 import Filters from './components/Filters';
 import FoodList from './components/FoodList';
 import EditFood from './components/EditFood';
+import Basket from './components/Basket';
 import Login from './components/Login';
 import Signup from './components/Signup';
 import Plans from './components/Plans';
@@ -20,7 +21,7 @@ export default function App() {
   const match = useMatch('/foods/:id/edit');
   const foodId = match ? match.params.id : null;
 
-  // Fetch all food data on mount
+  // Fetch all food data on mount, and when navigating back to main screen
   useEffect(() => {
     const fetchFoods = async () => {
       try {
@@ -70,6 +71,7 @@ export default function App() {
           }
         />
 
+        <Route path="/basket" element={<Basket />} />
         <Route path="/plans" element={<Plans />} />
       </Routes>
     </div>
