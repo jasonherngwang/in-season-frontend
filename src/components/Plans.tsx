@@ -14,6 +14,7 @@ const plans = [
     emphasize: false,
     imageUrl: 'images/apricot.webp',
     price: 'FREE',
+    extra: '',
   },
   {
     name: 'Heirloom',
@@ -30,11 +31,12 @@ const plans = [
     emphasize: true,
     imageUrl: 'images/fig.webp',
     price: 'ALWAYS FREE',
+    extra: '',
   },
   {
     name: 'Decadence',
     description:
-      'For the most dedicated lovers of exotic fruits and delicacies',
+      'For the most dedicated connoisseurs of exotic fruits and delicacies',
     benefits: [
       'Personal chef and nutritionist services',
       "Private limo to the farmer's market",
@@ -44,10 +46,12 @@ const plans = [
     emphasize: false,
     imageUrl: 'images/dragonfruit.webp',
     price: 'BY INVITATION ONLY',
+    extra:
+      'To request an invitation, complete Launch School Core with top marks.',
   },
 ];
 
-export default function Signup() {
+export default function Plans() {
   return (
     <div className="mx-auto mt-6 flex flex-col items-center md:mt-20">
       <h2 className="text-2xl font-bold text-neutral-700 md:text-3xl">
@@ -67,10 +71,19 @@ export default function Signup() {
             )}
           >
             <img
-              className="absolute top-0 aspect-square h-48 w-48 -translate-y-16 transform"
+              className={clsx(
+                'absolute top-0 aspect-square h-48 w-48 -translate-y-16 transform',
+                {
+                  'lg:h-56 lg:w-56': plan.emphasize,
+                }
+              )}
               src={plan.imageUrl}
             />
-            <h3 className="mt-28 text-4xl font-bold text-neutral-600">
+            <h3
+              className={clsx('mt-28 text-4xl font-bold text-neutral-600', {
+                'text-5xl text-violet-900 lg:mt-36': plan.emphasize,
+              })}
+            >
               {plan.name}
             </h3>
             <h4
@@ -98,6 +111,9 @@ export default function Signup() {
               >
                 Sign Up
               </Link>
+            )}
+            {plan.extra && (
+              <p className="mt-6 text-neutral-300">{plan.extra}</p>
             )}
           </div>
         ))}
