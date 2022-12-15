@@ -1,8 +1,8 @@
-import { useEffect, useState } from 'react';
-import { useStateValue, setFoodsAction } from './state';
+import { useEffect } from 'react';
+import { useStateValue, setFoodsAction, setBasketAction } from './state';
 import { Routes, Route, useMatch, useLocation } from 'react-router-dom';
 
-import foodService from './services/foodService';
+import userService from './services/userService';
 
 import ProtectedRoute from './components/ProtectedRoute';
 import Header from './components/Header';
@@ -25,8 +25,9 @@ export default function App() {
   useEffect(() => {
     const fetchFoods = async () => {
       try {
-        const foods = await foodService.getAll();
-        dispatch(setFoodsAction(foods));
+        const user = await userService.getUserData();
+        dispatch(setFoodsAction(user.foods));
+        dispatch(setBasketAction(user.basket));
       } catch (error) {
         console.error(error);
       }

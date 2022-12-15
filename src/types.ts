@@ -15,6 +15,11 @@ export type Food = {
   imageUrl?: string;
 };
 
+export type BasketFood = {
+  food: Food;
+  acquired: boolean;
+};
+
 export type Basket = {
   id: string;
   name: string;

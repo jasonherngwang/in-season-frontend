@@ -1,5 +1,5 @@
 import { State } from './state';
-import { Food, FilterParams, User } from '../types';
+import { Food, FilterParams, BasketFood, User } from '../types';
 
 export type Action =
   | {
@@ -7,6 +7,7 @@ export type Action =
       payload: Food[];
     }
   | { type: 'SET_FILTERS'; payload: FilterParams }
+  | { type: 'SET_BASKET'; payload: BasketFood[] }
   | { type: 'SET_USER'; payload: User };
 
 export const reducer = (state: State, action: Action): State => {
@@ -20,6 +21,11 @@ export const reducer = (state: State, action: Action): State => {
       return {
         ...state,
         filterParams: action.payload,
+      };
+    case 'SET_BASKET':
+      return {
+        ...state,
+        basket: action.payload,
       };
     case 'SET_USER':
       return {
@@ -43,6 +49,13 @@ export const setFiltersAction = (filterParams: FilterParams): Action => {
   return {
     type: 'SET_FILTERS',
     payload: filterParams,
+  };
+};
+
+export const setBasketAction = (basket: BasketFood[]): Action => {
+  return {
+    type: 'SET_BASKET',
+    payload: basket,
   };
 };
 

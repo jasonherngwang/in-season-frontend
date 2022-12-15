@@ -1,11 +1,15 @@
 import { useState } from 'react';
-import { useStateValue } from '../state';
+import { setBasketAction, useStateValue } from '../state';
 
 import { Switch } from '@headlessui/react';
 
 export default function Basket() {
-  const [{ foods, filterParams }, _] = useStateValue();
+  const [{ basket }, dispatch] = useStateValue();
   const [enabled, setEnabled] = useState(false);
+
+  const handleToggle = () => {
+    //api call
+  };
 
   return (
     <div className="mx-auto mt-6 flex max-w-md flex-col items-center md:mt-20">
@@ -16,14 +20,14 @@ export default function Basket() {
         <li className="mt-3 mb-1 flex justify-end">
           <h3 className="ml-4">Purchased</h3>
         </li>
-        {foods.map((food) => (
+        {basket.map((item) => (
           <li className="flex items-center border-t border-neutral-200">
             <img
-              src={food.imageUrl}
-              alt={food.name}
+              src={item.food.imageUrl}
+              alt={item.food.name}
               className="my-2 aspect-square h-16 w-16 object-contain"
             />
-            <div className="ml-4 text-xl">{food.name}</div>
+            <div className="ml-4 text-xl">{item.food.name}</div>
             <Switch
               checked={enabled}
               onChange={setEnabled}
