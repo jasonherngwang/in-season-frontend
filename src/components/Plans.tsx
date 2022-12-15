@@ -49,52 +49,59 @@ const plans = [
 
 export default function Signup() {
   return (
-    <div className="mt-24 lg:mt-40 lg:grid lg:grid-cols-3 lg:gap-x-10">
-      {plans.map((plan) => (
-        <div
-          key={plan.name}
-          className={clsx(
-            'relative mt-20 flex flex-col rounded-xl border border-neutral-200 p-7 shadow lg:mt-0',
-            {
-              'border-2 border-violet-500 shadow-violet-700': plan.emphasize,
-            }
-          )}
-        >
-          <img
-            className="absolute top-0 aspect-square h-48 w-48 -translate-y-16 transform"
-            src={plan.imageUrl}
-          />
-          <h3 className="mt-28 text-4xl font-bold text-neutral-600">
-            {plan.name}
-          </h3>
-          <h4
+    <div className="mx-auto mt-6 flex flex-col items-center md:mt-20">
+      <h2 className="text-2xl font-bold text-neutral-700 md:text-3xl">
+        Plans and Pricing
+      </h2>
+      <div className="mt-8 lg:mt-32 lg:grid lg:grid-cols-3 lg:gap-x-8">
+        {plans.map((plan) => (
+          <div
+            key={plan.name}
             className={clsx(
-              'mt-4 text-2xl font-bold tracking-wide text-amber-500',
-              { 'text-rose-500': plan.name === 'Decadence' }
+              'relative mt-20 flex flex-col rounded-xl border border-neutral-200 p-7 shadow',
+              {
+                'border-2 border-violet-500 shadow-xl shadow-violet-600/50 lg:mt-0':
+                  plan.emphasize,
+                'last:mt-28 lg:mt-10 lg:h-5/6 last:lg:mt-10': !plan.emphasize,
+              }
             )}
           >
-            {plan.price}
-          </h4>
-          <p className="mt-4 text-lg">{plan.description}</p>
-          <ul className="mt-2">
-            {plan.benefits.map((benefit) => (
-              <li key={benefit} className="mt-4 flex">
-                <CheckCircleIcon className="h-8 w-8 flex-shrink-0 stroke-green-600" />
-                <span className="ml-3 mt-1 text-gray-500">{benefit}</span>
-              </li>
-            ))}
-          </ul>
-          {plan.emphasize && (
-            <Link
-              to="/signup"
-              className="mt-8 flex w-full justify-center rounded-md border-transparent bg-violet-700 py-3 px-4 font-medium tracking-wider text-white hover:bg-violet-600 focus:outline-none focus:ring-2 focus:ring-violet-700 focus:ring-offset-2 active:bg-violet-800"
-              type="submit"
+            <img
+              className="absolute top-0 aspect-square h-48 w-48 -translate-y-16 transform"
+              src={plan.imageUrl}
+            />
+            <h3 className="mt-28 text-4xl font-bold text-neutral-600">
+              {plan.name}
+            </h3>
+            <h4
+              className={clsx(
+                'mt-4 text-2xl font-bold tracking-wide text-amber-500',
+                { 'text-rose-500': plan.name === 'Decadence' }
+              )}
             >
-              Sign Up
-            </Link>
-          )}
-        </div>
-      ))}
+              {plan.price}
+            </h4>
+            <p className="mt-4 text-lg">{plan.description}</p>
+            <ul className="mt-2">
+              {plan.benefits.map((benefit) => (
+                <li key={benefit} className="mt-4 flex">
+                  <CheckCircleIcon className="h-8 w-8 flex-shrink-0 stroke-green-600" />
+                  <span className="ml-3 mt-1 text-gray-500">{benefit}</span>
+                </li>
+              ))}
+            </ul>
+            {plan.emphasize && (
+              <Link
+                to="/signup"
+                className="mt-8 flex w-full justify-center rounded-md border-transparent bg-violet-700 py-3 px-4 font-medium tracking-wider text-white hover:bg-violet-600 focus:outline-none focus:ring-2 focus:ring-violet-700 focus:ring-offset-2 active:bg-violet-800"
+                type="submit"
+              >
+                Sign Up
+              </Link>
+            )}
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

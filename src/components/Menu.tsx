@@ -63,14 +63,30 @@ export default function SideMenu() {
                   Logout
                 </Link>
               ) : (
-                <Link
-                  to="/login"
-                  className={clsx('block bg-white px-4 py-3 text-neutral-700', {
-                    'text-green-600': active,
-                  })}
-                >
-                  Login
-                </Link>
+                <>
+                  <Link
+                    to="/signup"
+                    className={clsx(
+                      'block bg-white px-4 py-3 text-neutral-700',
+                      {
+                        'text-green-600': active,
+                      }
+                    )}
+                  >
+                    Sign Up
+                  </Link>
+                  <Link
+                    to="/login"
+                    className={clsx(
+                      'block bg-white px-4 py-3 text-neutral-700',
+                      {
+                        'text-green-600': active,
+                      }
+                    )}
+                  >
+                    Login
+                  </Link>
+                </>
               )
             }
           </Menu.Item>
