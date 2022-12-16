@@ -22,6 +22,26 @@ const addFood = async (foodId: string) => {
   }
 };
 
+const deleteFood = async (foodId: string) => {
+  const config = {
+    headers: { Authorization: getToken() },
+  };
+
+  try {
+    const response = await axios.patch(
+      `${BASKET_URL}/delete`,
+      { food: foodId },
+      config
+    );
+    return response.data;
+  } catch (error) {
+    if (error instanceof Error) {
+      throw new Error(error.message);
+    }
+  }
+};
+
 export default {
   addFood,
+  deleteFood,
 };

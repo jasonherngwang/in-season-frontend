@@ -16,6 +16,7 @@ export type Food = {
 };
 
 export type BasketFood = {
+  id: string;
   food: Food;
   acquired: boolean;
 };

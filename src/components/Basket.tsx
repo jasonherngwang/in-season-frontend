@@ -21,7 +21,10 @@ export default function Basket() {
           <h3 className="ml-4">Purchased</h3>
         </li>
         {basket.map((item) => (
-          <li className="flex items-center border-t border-neutral-200">
+          <li
+            key={item.id}
+            className="flex items-center border-t border-neutral-200"
+          >
             <img
               src={item.food.imageUrl}
               alt={item.food.name}

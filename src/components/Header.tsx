@@ -1,9 +1,13 @@
 import { Link } from 'react-router-dom';
+import { useStateValue } from '../state';
 
 import Menu from './Menu';
 import { ShoppingBagIcon } from '@heroicons/react/24/outline';
 
 export default function Header() {
+  const [{ basket }, dispatch] = useStateValue();
+  const numItemsInBasket = basket.length;
+
   return (
     <header className="py-8">
       <nav>
@@ -23,7 +27,7 @@ export default function Header() {
             <Link to="/basket">
               <div className="group flex transform items-center rounded-full border px-2 py-1 hover:border-green-600 hover:bg-green-600 sm:px-3">
                 <div className="hidden text-sm font-bold text-neutral-700 group-hover:text-white sm:block">
-                  42
+                  {numItemsInBasket}
                 </div>
                 <ShoppingBagIcon className='text-neutral-300" h-6 w-6 group-hover:text-white  sm:ml-2' />
               </div>
