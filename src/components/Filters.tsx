@@ -44,12 +44,12 @@ export default function Filters() {
   };
 
   return (
-    <div className="mt-6 mb-10 grid grid-cols-1 gap-x-6 gap-y-4 sm:grid-cols-2">
+    <div className="my-3 grid grid-cols-1 gap-x-6 gap-y-4 sm:my-10 sm:grid-cols-2">
       {/* Search input */}
       <div className="col-span-1">
         <label
           htmlFor="filterTerm"
-          className="block text-lg font-medium text-neutral-500"
+          className="block font-medium text-neutral-500 sm:text-lg"
         >
           Filter by name
         </label>
@@ -58,7 +58,7 @@ export default function Filters() {
             type="text"
             name="filterTerm"
             id="filterTerm"
-            className="block w-full rounded-md border-neutral-300 shadow-sm focus:border-green-600 focus:ring-green-600 sm:max-w-sm"
+            className="block w-full rounded-md border-neutral-300 text-sm shadow-sm focus:border-green-600 focus:ring-green-600 sm:max-w-sm sm:text-base"
             placeholder="Food name"
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>
               handleFilterTerm(e.target.value)
@@ -68,10 +68,10 @@ export default function Filters() {
       </div>
       {/* Checkboxes */}
       <div className="col-span-1 mt-2 flex flex-col sm:mt-0">
-        <p className="block text-lg font-medium text-neutral-500">
+        <p className="block font-medium text-neutral-500 sm:text-lg">
           Select categories
         </p>
-        <div className="mt-2 flex gap-4 sm:mt-4 sm:text-sm md:gap-12 md:text-base">
+        <div className="mt-2 flex gap-4 text-sm sm:mt-4 md:gap-12 md:text-base">
           <div className="flex items-center">
             <input
               id="checkVegetable"

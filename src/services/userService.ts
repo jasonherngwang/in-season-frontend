@@ -18,6 +18,27 @@ const getUserData = async () => {
   }
 };
 
+const getTrialUserData = async () => {
+  try {
+    const response = await axios.get(`${USERS_URL}/trial`);
+    return response.data;
+  } catch (error) {
+    if (error instanceof Error) {
+      throw new Error(error.message);
+    }
+  }
+};
+
+const deleteUser = async () => {
+  const config = {
+    headers: { Authorization: getToken() },
+  };
+
+  await axios.delete(`${USERS_URL}`, config);
+};
+
 export default {
   getUserData,
+  getTrialUserData,
+  deleteUser,
 };

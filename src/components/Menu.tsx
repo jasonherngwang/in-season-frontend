@@ -1,7 +1,8 @@
 import { Fragment } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 
-import { getUserName, removeUser } from '../utils/tokenManagement';
+import userService from '../services/userService';
+import { isLoggedIn, removeUser } from '../utils/tokenManagement';
 import { resetStateAction, useStateValue } from '../state';
 
 import clsx from 'clsx';
@@ -18,18 +19,27 @@ import {
 
 export default function SideMenu() {
   const [{ user }, dispatch] = useStateValue();
-  const userName = user ? user.username : null;
+
+  const navigate = useNavigate();
 
   // Reset all state
   const logout = () => {
     removeUser();
     dispatch(resetStateAction());
+    navigate('/');
+  };
+
+  const deleteAccount = async () => {
+    if (window.confirm('Are you sure you want to delete your account?')) {
+      await userService.deleteUser();
+      logout();
+    }
   };
 
   return (
     <Menu as="div" className="relative z-10">
       <Menu.Button>
-        <Bars3Icon className='text-neutral-300" h-6 w-6 sm:h-8 sm:w-8' />
+        <Bars3Icon className='text-neutral-300" h-8 w-8' />
       </Menu.Button>
       <Transition
         as={Fragment}
@@ -42,10 +52,10 @@ export default function SideMenu() {
       >
         <Menu.Items className="absolute w-52 origin-top-left rounded-xl bg-white shadow-xl ring-1 ring-neutral-200 focus:outline-none">
           <div>
-            {userName && (
+            {isLoggedIn() && (
               <Menu.Item key="username" as="div">
                 <div className="block rounded-t-lg border-b bg-neutral-100 px-4 py-3 font-semibold text-neutral-700 ring-1 ring-neutral-200">
-                  {userName}
+                  {user?.username}
                 </div>
               </Menu.Item>
             )}
@@ -83,7 +93,7 @@ export default function SideMenu() {
             </Menu.Item>
             <Menu.Item key="logout" as={Fragment}>
               {({ active }) =>
-                getUserName() ? (
+                isLoggedIn() ? (
                   <Link
                     to="/"
                     onClick={logout}
@@ -127,11 +137,11 @@ export default function SideMenu() {
                 )
               }
             </Menu.Item>
-            {userName && (
+            {isLoggedIn() && (
               <Menu.Item key={'delete'} as={Fragment}>
                 {({ active }) => (
-                  <Link
-                    to="/"
+                  <button
+                    onClick={deleteAccount}
                     className={clsx(
                       'group flex items-center px-4 py-4 text-neutral-700',
                       {
@@ -141,7 +151,7 @@ export default function SideMenu() {
                   >
                     <TrashIcon className="mr-2 h-5 w-5 text-neutral-400 group-hover:text-red-600" />
                     Delete Account
-                  </Link>
+                  </button>
                 )}
               </Menu.Item>
             )}

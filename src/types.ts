@@ -1,7 +1,7 @@
 // null when logged out
 export type User = {
   username: string;
-  token: string;
+  token?: string;
 } | null;
 
 export type MonthsInSeason = Record<string, boolean>;

@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import { useStateValue, setUserAction } from '../state';
+import { useStateValue, setUserAction, resetStateAction } from '../state';
 
 import loginService from '../services/loginService';
 import { setUser } from '../utils/tokenManagement';
@@ -22,6 +22,7 @@ export default function Login() {
       const registeredUser = await loginService.signup({ username, password });
       if (registeredUser) {
         const loggedInUser = await loginService.login({ username, password });
+        dispatch(resetStateAction());
         setUser(loggedInUser);
         dispatch(setUserAction(loggedInUser));
         navigate('/');

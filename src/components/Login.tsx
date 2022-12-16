@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 
-import { useStateValue, setUserAction } from '../state';
+import { useStateValue, setUserAction, resetStateAction } from '../state';
 
 import loginService from '../services/loginService';
 import { setUser } from '../utils/tokenManagement';
@@ -22,6 +22,7 @@ export default function Login() {
     try {
       const loggedInUser = await loginService.login({ username, password });
       if (loggedInUser) {
+        dispatch(resetStateAction());
         // Store username and token in localStorage and global state
         setUser(loggedInUser);
         dispatch(setUserAction(loggedInUser));

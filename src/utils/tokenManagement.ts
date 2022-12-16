@@ -51,3 +51,5 @@ export const tokenExpired = () => {
   }
   return false;
 };
+
+export const isLoggedIn = () => !tokenExpired();

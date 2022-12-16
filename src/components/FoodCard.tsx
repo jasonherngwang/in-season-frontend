@@ -4,6 +4,7 @@ import { useStateValue, setBasketAction } from '../state';
 import { Food } from '../types';
 import basketService from '../services/basketService';
 import { PencilSquareIcon } from '@heroicons/react/24/outline';
+import { isLoggedIn } from '../utils/tokenManagement';
 
 const capitalize = (name: string) => {
   if (!name) {
@@ -16,12 +17,24 @@ const capitalize = (name: string) => {
 };
 
 export default function FoodCard({ food }: { food: Food }) {
-  const [{ basket }, dispatch] = useStateValue();
+  const [{ basket, user }, dispatch] = useStateValue();
 
   const addToBasket = async (foodId: string) => {
     try {
-      const updatedBasket = await basketService.addFood(foodId);
-      dispatch(setBasketAction(updatedBasket));
+      if (isLoggedIn()) {
+        const updatedBasket = await basketService.addFood(foodId);
+        dispatch(setBasketAction(updatedBasket));
+      } else {
+        // Trial mode; modifies React state only
+        // Use foodId as a temporary value for basket item id
+        if (!basket.some((f) => f.food.id === foodId)) {
+          dispatch(
+            setBasketAction(
+              basket.concat({ id: foodId, food, acquired: false })
+            )
+          );
+        }
+      }
     } catch (error) {
       console.error(error);
     }
@@ -29,8 +42,13 @@ export default function FoodCard({ food }: { food: Food }) {
 
   const deleteFromBasket = async (foodId: string) => {
     try {
-      const updatedBasket = await basketService.deleteFood(foodId);
-      dispatch(setBasketAction(updatedBasket));
+      if (isLoggedIn()) {
+        const updatedBasket = await basketService.deleteFood(foodId);
+        dispatch(setBasketAction(updatedBasket));
+      } else {
+        // Trial mode; modifies React state only
+        dispatch(setBasketAction(basket.filter((f) => f.food.id !== foodId)));
+      }
     } catch (error) {
       console.error(error);
     }

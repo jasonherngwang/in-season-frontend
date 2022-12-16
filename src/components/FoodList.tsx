@@ -14,6 +14,8 @@ const filterFoods = (
   foods: Food[],
   { filterTerm, showVegetable, showFruit, showOther }: FilterParams
 ): Food[] => {
+  if (foods === undefined) return [];
+
   const matchesFilterTerm = (name: string) =>
     !filterTerm ? true : name.toLowerCase().includes(filterTerm.toLowerCase());
 

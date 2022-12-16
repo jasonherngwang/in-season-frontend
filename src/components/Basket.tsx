@@ -1,11 +1,13 @@
+import clsx from 'clsx';
 import { setBasketAction, useStateValue } from '../state';
 import basketService from '../services/basketService';
 import { sortBasketFoods } from '../utils/sortUtils';
 import { Switch } from '@headlessui/react';
 import { XCircleIcon } from '@heroicons/react/24/outline';
+import { isLoggedIn } from '../utils/tokenManagement';
 
 export default function Basket() {
-  const [{ basket }, dispatch] = useStateValue();
+  const [{ basket, user }, dispatch] = useStateValue();
 
   const toggleAcquiredState = async (
     basketFoodId: string,
@@ -16,7 +18,6 @@ export default function Basket() {
         basketFoodId,
         newAcquiredState
       );
-      console.log(newAcquiredState);
       dispatch(setBasketAction(updatedBasket));
     } catch (error) {
       console.error(error);
@@ -25,8 +26,13 @@ export default function Basket() {
 
   const deleteFromBasket = async (foodId: string) => {
     try {
-      const updatedBasket = await basketService.deleteFood(foodId);
-      dispatch(setBasketAction(updatedBasket));
+      if (isLoggedIn()) {
+        const updatedBasket = await basketService.deleteFood(foodId);
+        dispatch(setBasketAction(updatedBasket));
+      } else {
+        // Trial mode; modifies React state only
+        dispatch(setBasketAction(basket.filter((f) => f.food.id !== foodId)));
+      }
     } catch (error) {
       console.error(error);
     }
@@ -51,7 +57,9 @@ export default function Basket() {
             <tr>
               <th></th>
               <th></th>
-              <th className="text-right font-normal">Acquired</th>
+              <th className="text-right font-normal">
+                <span className={clsx(!user && 'invisible')}>Acquired</span>
+              </th>
               <th className="text-right font-normal"></th>
             </tr>
           </thead>
@@ -76,9 +84,11 @@ export default function Basket() {
                     onChange={() =>
                       toggleAcquiredState(item.id, !item.acquired)
                     }
-                    className={`${
-                      item.acquired ? 'bg-green-600' : 'bg-gray-200'
-                    } relative ml-auto inline-flex h-6 w-11 items-center rounded-full`}
+                    className={clsx(
+                      'relative ml-auto inline-flex h-6 w-11 items-center rounded-full',
+                      item.acquired ? 'bg-green-600' : 'bg-gray-200',
+                      !user && 'invisible'
+                    )}
                   >
                     <span className="sr-only">Enable notifications</span>
                     <span

@@ -1,5 +1,10 @@
 import { useEffect } from 'react';
-import { useStateValue, setFoodsAction, setBasketAction } from './state';
+import {
+  useStateValue,
+  setFoodsAction,
+  setBasketAction,
+  setUserAction,
+} from './state';
 import {
   Routes,
   Route,
@@ -9,9 +14,11 @@ import {
 } from 'react-router-dom';
 
 import userService from './services/userService';
+import { isLoggedIn } from './utils/tokenManagement';
 
 import ProtectedRoute from './components/ProtectedRoute';
 import Header from './components/Header';
+import Banner from './components/Banner';
 import Filters from './components/Filters';
 import FoodList from './components/FoodList';
 import EditFood from './components/EditFood';
@@ -21,7 +28,7 @@ import Signup from './components/Signup';
 import Plans from './components/Plans';
 
 export default function App() {
-  const [{ user }, dispatch] = useStateValue();
+  const [, dispatch] = useStateValue();
   const location = useLocation();
 
   const match = useMatch('/foods/:id/edit');
@@ -29,20 +36,22 @@ export default function App() {
 
   // Fetch all food data on mount, and when navigating back to main screen
   useEffect(() => {
-    if (!user) {
-      console.log('no user');
-    } else {
-      const fetchFoods = async () => {
-        try {
-          const user = await userService.getUserData();
-          dispatch(setFoodsAction(user.foods));
-          dispatch(setBasketAction(user.basket));
-        } catch (error) {
-          console.error(error);
+    const fetchFoods = async () => {
+      try {
+        if (isLoggedIn()) {
+          const userData = await userService.getUserData();
+          dispatch(setFoodsAction(userData.foods));
+          dispatch(setBasketAction(userData.basket));
+          dispatch(setUserAction({ username: userData.username }));
+        } else {
+          const userData = await userService.getTrialUserData();
+          dispatch(setFoodsAction(userData.foods));
         }
-      };
-      void fetchFoods();
-    }
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    void fetchFoods();
   }, [dispatch, location]);
 
   return (
@@ -76,13 +85,22 @@ export default function App() {
           path="/"
           element={
             <>
+              {!isLoggedIn() && <Banner />}
               <Filters />
               <FoodList />
             </>
           }
         />
 
-        <Route path="/basket" element={<Basket />} />
+        <Route
+          path="/basket"
+          element={
+            <>
+              {!isLoggedIn() && <Banner />}
+              <Basket />
+            </>
+          }
+        />
         <Route path="/plans" element={<Plans />} />
         <Route path="*" element={<Navigate to="/" />} />
       </Routes>

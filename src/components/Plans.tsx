@@ -1,6 +1,7 @@
 import clsx from 'clsx';
 import { Link } from 'react-router-dom';
 import { CheckCircleIcon } from '@heroicons/react/24/outline';
+import { isLoggedIn } from '../utils/tokenManagement';
 
 const plans = [
   {
@@ -13,7 +14,7 @@ const plans = [
     ],
     emphasize: false,
     imageUrl: 'images/apricot.webp',
-    price: 'FREE',
+    price: 'ALWAYS FREE',
     extra: '',
   },
   {
@@ -30,7 +31,7 @@ const plans = [
     ],
     emphasize: true,
     imageUrl: 'images/fig.webp',
-    price: 'ALWAYS FREE',
+    price: 'ABSOLUTELY FREE',
     extra: '',
   },
   {
@@ -64,7 +65,7 @@ export default function Plans() {
             className={clsx(
               'relative mt-20 flex flex-col rounded-xl border border-neutral-200 p-7 shadow',
               {
-                'border-2 border-violet-500 shadow-xl shadow-violet-600/50 lg:mt-0':
+                'border-2 border-violet-500 pb-6 shadow-xl shadow-violet-600/50 lg:mt-0':
                   plan.emphasize,
                 'last:mt-28 lg:mt-10 lg:h-5/6 last:lg:mt-10': !plan.emphasize,
               }
@@ -106,7 +107,7 @@ export default function Plans() {
                 </li>
               ))}
             </ul>
-            {plan.emphasize && (
+            {plan.emphasize && !isLoggedIn() && (
               <Link
                 to="/signup"
                 className="mt-8 flex w-full justify-center rounded-md border-transparent bg-violet-700 py-3 px-4 font-medium tracking-wider text-white hover:bg-violet-600 focus:outline-none focus:ring-2 focus:ring-violet-700 focus:ring-offset-2 active:bg-violet-800"
@@ -114,6 +115,11 @@ export default function Plans() {
               >
                 Sign Up
               </Link>
+            )}
+            {plan.emphasize && isLoggedIn() && (
+              <p className="mt-8 mb-1 text-lg font-bold text-violet-800">
+                Thank you for being a member!
+              </p>
             )}
             {plan.extra && (
               <p className="mt-6 text-neutral-300">{plan.extra}</p>
