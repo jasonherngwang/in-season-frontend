@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { Food, FilterParams } from '../types';
 import { useStateValue } from '../state';
 import FoodListSection from './FoodListSection';
+import { sortFoodsAlphabetically } from '../utils/sortUtils';
 
 import {
   ArrowLeftCircleIcon,
@@ -9,9 +10,6 @@ import {
 } from '@heroicons/react/24/outline';
 
 // Filter and sort array of Foods
-const sortAlphabetically = (foods: Food[]) =>
-  [...foods].sort((a, b) => a.name.localeCompare(b.name));
-
 const filterFoods = (
   foods: Food[],
   { filterTerm, showVegetable, showFruit, showOther }: FilterParams
@@ -36,7 +34,7 @@ const filterFoods = (
     (food) => matchesFilterTerm(food.name) && matchesCategory(food.category)
   );
 
-  return sortAlphabetically(filteredFoods);
+  return sortFoodsAlphabetically(filteredFoods, false);
 };
 
 const getMonthInfo = (monthNum: number) => {
