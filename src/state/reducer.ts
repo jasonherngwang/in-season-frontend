@@ -1,6 +1,18 @@
 import { State } from './state';
 import { Food, FilterParams, BasketFood, User } from '../types';
 
+export const initialState: State = {
+  foods: [],
+  basket: [],
+  filterParams: {
+    filterTerm: '',
+    showVegetable: true,
+    showFruit: true,
+    showOther: true,
+  },
+  user: null,
+};
+
 export type Action =
   | {
       type: 'SET_FOODS';
@@ -8,7 +20,8 @@ export type Action =
     }
   | { type: 'SET_FILTERS'; payload: FilterParams }
   | { type: 'SET_BASKET'; payload: BasketFood[] }
-  | { type: 'SET_USER'; payload: User };
+  | { type: 'SET_USER'; payload: User }
+  | { type: 'RESET_STATE'; payload: null };
 
 export const reducer = (state: State, action: Action): State => {
   switch (action.type) {
@@ -30,7 +43,12 @@ export const reducer = (state: State, action: Action): State => {
     case 'SET_USER':
       return {
         ...state,
-        // user: action.payload,
+        user: action.payload,
+      };
+    case 'RESET_STATE':
+      return {
+        ...state,
+        ...initialState,
       };
     default:
       return state;
@@ -63,5 +81,12 @@ export const setUserAction = (user: User): Action => {
   return {
     type: 'SET_USER',
     payload: user,
+  };
+};
+
+export const resetStateAction = (): Action => {
+  return {
+    type: 'RESET_STATE',
+    payload: null,
   };
 };

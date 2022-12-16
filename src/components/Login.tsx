@@ -4,7 +4,7 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import { useStateValue, setUserAction } from '../state';
 
 import loginService from '../services/loginService';
-import { setToken } from '../utils/tokenManagement';
+import { setUser } from '../utils/tokenManagement';
 
 export default function Login() {
   const [, dispatch] = useStateValue();
@@ -22,8 +22,9 @@ export default function Login() {
     try {
       const loggedInUser = await loginService.login({ username, password });
       if (loggedInUser) {
-        setToken(loggedInUser); // Store token in localStorage
-        dispatch(setUserAction(loggedInUser)); // Update global state
+        // Store username and token in localStorage and global state
+        setUser(loggedInUser);
+        dispatch(setUserAction(loggedInUser));
         // Redirect user to the route originally requested
         const origin = location.state?.from?.pathname || '/';
         navigate(origin);

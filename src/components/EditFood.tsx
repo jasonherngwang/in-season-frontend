@@ -138,6 +138,8 @@ export default function EditFood({
           setDescription(food.description || '');
           setMonths({ ...months, ...food.months });
           setImageUrl(food.imageUrl || '');
+        } else {
+          navigate('/'); // If user types in non-existing id
         }
       } catch (error) {
         console.error(error);

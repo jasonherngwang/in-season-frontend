@@ -72,7 +72,7 @@ export default function Plans() {
           >
             <img
               className={clsx(
-                'absolute top-0 aspect-square h-48 w-48 -translate-y-16 transform',
+                'absolute top-0 aspect-square h-40 w-40 -translate-y-16 transform sm:h-48 sm:w-48',
                 {
                   'lg:h-56 lg:w-56': plan.emphasize,
                 }
@@ -80,15 +80,18 @@ export default function Plans() {
               src={plan.imageUrl}
             />
             <h3
-              className={clsx('mt-28 text-4xl font-bold text-neutral-600', {
-                'text-5xl text-violet-900 lg:mt-36': plan.emphasize,
-              })}
+              className={clsx(
+                'mt-20 text-3xl font-bold text-neutral-600 sm:mt-28 sm:text-4xl',
+                {
+                  'text-violet-900 sm:text-5xl lg:mt-36': plan.emphasize,
+                }
+              )}
             >
               {plan.name}
             </h3>
             <h4
               className={clsx(
-                'mt-4 text-2xl font-bold tracking-wide text-amber-500',
+                'mt-4 text-xl font-bold tracking-wide text-amber-500 sm:text-2xl',
                 { 'text-rose-500': plan.name === 'Decadence' }
               )}
             >

@@ -10,14 +10,22 @@ type LoggedInUser = {
   token: string;
 };
 
-export const setToken = (loggedInUser: LoggedInUser) => {
+export const setUser = (loggedInUser: LoggedInUser) => {
   window.localStorage.setItem(
     'user',
     JSON.stringify({
-      ...loggedInUser,
+      username: loggedInUser.username,
       token: 'Bearer ' + loggedInUser.token,
     })
   );
+};
+
+export const getUserName = () => {
+  const user = window.localStorage.getItem('user');
+  if (user) {
+    return JSON.parse(user).username;
+  }
+  return null;
 };
 
 export const getToken = () => {
@@ -28,7 +36,7 @@ export const getToken = () => {
   return null;
 };
 
-export const removeToken = () => {
+export const removeUser = () => {
   window.localStorage.removeItem('user');
 };
 
@@ -42,12 +50,4 @@ export const tokenExpired = () => {
     return now > exp;
   }
   return false;
-};
-
-export const getUser = () => {
-  const user = window.localStorage.getItem('user');
-  if (user) {
-    return JSON.parse(user);
-  }
-  return null;
 };

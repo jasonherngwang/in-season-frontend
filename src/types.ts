@@ -1,7 +1,7 @@
+// null when logged out
 export type User = {
-  id: string;
   username: string;
-  foods: Food[];
+  token: string;
 } | null;
 
 export type MonthsInSeason = Record<string, boolean>;
@@ -19,13 +19,6 @@ export type BasketFood = {
   id: string;
   food: Food;
   acquired: boolean;
-};
-
-export type Basket = {
-  id: string;
-  name: string;
-  owner?: string;
-  foods?: Food[];
 };
 
 // Object used for filtering lists of foods

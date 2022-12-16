@@ -1,22 +1,12 @@
 import React, { createContext, useContext, useReducer } from 'react';
-import { Food, FilterParams, BasketFood } from '../types';
-import { Action } from './reducer';
+import { Food, FilterParams, BasketFood, User } from '../types';
+import { Action, initialState } from './reducer';
 
 export type State = {
   foods: Food[];
   basket: BasketFood[];
   filterParams: FilterParams;
-};
-
-const initialState: State = {
-  foods: [],
-  basket: [],
-  filterParams: {
-    filterTerm: '',
-    showVegetable: true,
-    showFruit: true,
-    showOther: true,
-  },
+  user: User;
 };
 
 export const StateContext = createContext<[State, React.Dispatch<Action>]>([

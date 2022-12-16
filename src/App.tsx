@@ -1,6 +1,12 @@
 import { useEffect } from 'react';
 import { useStateValue, setFoodsAction, setBasketAction } from './state';
-import { Routes, Route, useMatch, useLocation } from 'react-router-dom';
+import {
+  Routes,
+  Route,
+  Navigate,
+  useMatch,
+  useLocation,
+} from 'react-router-dom';
 
 import userService from './services/userService';
 
@@ -15,7 +21,7 @@ import Signup from './components/Signup';
 import Plans from './components/Plans';
 
 export default function App() {
-  const [, dispatch] = useStateValue();
+  const [{ user }, dispatch] = useStateValue();
   const location = useLocation();
 
   const match = useMatch('/foods/:id/edit');
@@ -23,16 +29,20 @@ export default function App() {
 
   // Fetch all food data on mount, and when navigating back to main screen
   useEffect(() => {
-    const fetchFoods = async () => {
-      try {
-        const user = await userService.getUserData();
-        dispatch(setFoodsAction(user.foods));
-        dispatch(setBasketAction(user.basket));
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    void fetchFoods();
+    if (!user) {
+      console.log('no user');
+    } else {
+      const fetchFoods = async () => {
+        try {
+          const user = await userService.getUserData();
+          dispatch(setFoodsAction(user.foods));
+          dispatch(setBasketAction(user.basket));
+        } catch (error) {
+          console.error(error);
+        }
+      };
+      void fetchFoods();
+    }
   }, [dispatch, location]);
 
   return (
@@ -74,6 +84,7 @@ export default function App() {
 
         <Route path="/basket" element={<Basket />} />
         <Route path="/plans" element={<Plans />} />
+        <Route path="*" element={<Navigate to="/" />} />
       </Routes>
     </div>
   );

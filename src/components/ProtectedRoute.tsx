@@ -14,7 +14,7 @@ const ProtectedRoute = ({
   const location = useLocation();
 
   if (tokenExpired()) {
-    // Use `state` to remember the route originally requested
+    // Use `state` to remember the route originally requested; redirect after login
     return <Navigate to={redirectPath} replace state={{ from: location }} />;
   }
 
