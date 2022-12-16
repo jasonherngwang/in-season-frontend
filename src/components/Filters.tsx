@@ -71,7 +71,7 @@ export default function Filters() {
         <p className="block font-medium text-neutral-500 sm:text-lg">
           Select categories
         </p>
-        <div className="mt-2 flex gap-4 text-sm sm:mt-4 md:gap-12 md:text-base">
+        <div className="mt-2 flex gap-4 text-sm sm:mt-4 md:gap-10 md:text-base lg:gap-14">
           <div className="flex items-center">
             <input
               id="checkVegetable"

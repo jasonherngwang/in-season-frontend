@@ -87,18 +87,18 @@ export default function FoodList() {
       <div className="mt-14 sm:mt-20">
         <div className="flex items-center justify-center gap-x-10">
           <button onClick={() => incrementMonth()}>
-            <ArrowLeftCircleIcon className="h-10 w-10 stroke-neutral-500 hover:fill-green-50 hover:stroke-green-700" />
+            <ArrowLeftCircleIcon className="h-8 w-8 stroke-neutral-500 hover:fill-green-50 hover:stroke-green-700 sm:h-10 sm:w-10" />
           </button>
           <div className="text-center">
             <p className="font-bold tracking-wider text-green-700">
               IN SEASON NOW
             </p>
-            <h1 className="mt-1 text-3xl font-medium text-neutral-600">
+            <h1 className="mt-1 text-2xl font-medium text-neutral-600 sm:text-3xl">
               {month.name}
             </h1>
           </div>
           <button onClick={() => decrementMonth()}>
-            <ArrowRightCircleIcon className="h-10 w-10 stroke-neutral-500 hover:fill-green-50 hover:stroke-green-700" />
+            <ArrowRightCircleIcon className="h-8 w-8 stroke-neutral-500 hover:fill-green-50 hover:stroke-green-700 sm:h-10 sm:w-10" />
           </button>
         </div>
         <FoodListSection foods={foodsInSeason} />
@@ -109,14 +109,14 @@ export default function FoodList() {
           <p className="font-bold tracking-wider text-amber-600">
             IN SEASON NEXT MONTH
           </p>
-          <h1 className="mt-1 text-3xl font-medium text-neutral-600">
+          <h1 className="mt-1 text-2xl font-medium text-neutral-600 sm:text-3xl">
             {nextMonth.name}
           </h1>
         </div>
         <FoodListSection foods={foodsUpcoming} />
       </div>
       <div className="mt-14 border-t-2 border-neutral-100 pt-10 sm:mt-20">
-        <h1 className="text-center text-3xl font-medium text-neutral-500">
+        <h1 className="text-center text-2xl font-medium text-neutral-500 sm:text-3xl">
           Out of Season
         </h1>
         <FoodListSection foods={foodsOutOfSeason} />

@@ -117,8 +117,13 @@ export default function Plans() {
               </Link>
             )}
             {plan.emphasize && isLoggedIn() && (
-              <p className="mt-8 mb-1 text-lg font-bold text-violet-800">
+              <p className=" mt-8 rounded-md border border-violet-800 px-4 py-2 text-lg font-bold text-violet-800">
                 Thank you for being a member!
+              </p>
+            )}
+            {plan.name === 'Organic' && !isLoggedIn() && (
+              <p className=" text-md mt-8 mb-1 rounded-md border border-green-600 px-4 py-2 font-bold text-green-600">
+                You are currently on this plan.
               </p>
             )}
             {plan.extra && (
