@@ -1,14 +1,25 @@
-import { useState } from 'react';
 import { setBasketAction, useStateValue } from '../state';
-
+import basketService from '../services/basketService';
+import userService from '../services/userService';
 import { Switch } from '@headlessui/react';
 
 export default function Basket() {
   const [{ basket }, dispatch] = useStateValue();
-  const [enabled, setEnabled] = useState(false);
 
-  const handleToggle = () => {
-    //api call
+  const toggleAcquiredState = async (
+    basketFoodId: string,
+    newAcquiredState: boolean
+  ) => {
+    try {
+      const updatedBasket = await basketService.toggleAcquired(
+        basketFoodId,
+        newAcquiredState
+      );
+      console.log(newAcquiredState);
+      dispatch(setBasketAction(updatedBasket));
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -18,7 +29,7 @@ export default function Basket() {
       </h2>
       <ul className=" mt-4 w-full border-b border-neutral-200">
         <li className="mt-3 mb-1 flex justify-end">
-          <h3 className="ml-4">Purchased</h3>
+          <h3 className="ml-4">Acquired</h3>
         </li>
         {basket.map((item) => (
           <li
@@ -32,16 +43,16 @@ export default function Basket() {
             />
             <div className="ml-4 text-xl">{item.food.name}</div>
             <Switch
-              checked={enabled}
-              onChange={setEnabled}
+              checked={item.acquired}
+              onChange={() => toggleAcquiredState(item.id, !item.acquired)}
               className={`${
-                enabled ? 'bg-green-600' : 'bg-gray-200'
+                item.acquired ? 'bg-green-600' : 'bg-gray-200'
               } relative ml-auto inline-flex h-6 w-11 items-center rounded-full`}
             >
               <span className="sr-only">Enable notifications</span>
               <span
                 className={`${
-                  enabled ? 'translate-x-6' : 'translate-x-1'
+                  item.acquired ? 'translate-x-6' : 'translate-x-1'
                 } inline-block h-4 w-4 transform rounded-full bg-white transition`}
               />
             </Switch>

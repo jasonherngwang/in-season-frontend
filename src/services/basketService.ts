@@ -41,7 +41,30 @@ const deleteFood = async (foodId: string) => {
   }
 };
 
+const toggleAcquired = async (
+  basketFoodId: string,
+  newAcquiredState: boolean
+) => {
+  const config = {
+    headers: { Authorization: getToken() },
+  };
+
+  try {
+    const response = await axios.patch(
+      `${BASKET_URL}/toggle`,
+      { food: basketFoodId, acquired: newAcquiredState },
+      config
+    );
+    return response.data;
+  } catch (error) {
+    if (error instanceof Error) {
+      throw new Error(error.message);
+    }
+  }
+};
+
 export default {
   addFood,
   deleteFood,
+  toggleAcquired,
 };

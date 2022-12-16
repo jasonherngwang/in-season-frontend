@@ -3,7 +3,6 @@ import { useStateValue, setBasketAction } from '../state';
 
 import { Food } from '../types';
 import basketService from '../services/basketService';
-import userService from '../services/userService';
 import { PencilSquareIcon } from '@heroicons/react/24/outline';
 
 const capitalize = (name: string) => {
@@ -21,9 +20,8 @@ export default function FoodCard({ food }: { food: Food }) {
 
   const addToBasket = async (foodId: string) => {
     try {
-      await basketService.addFood(foodId);
-      const user = await userService.getUserData();
-      dispatch(setBasketAction(user.basket));
+      const updatedBasket = await basketService.addFood(foodId);
+      dispatch(setBasketAction(updatedBasket));
     } catch (error) {
       console.error(error);
     }
@@ -31,9 +29,8 @@ export default function FoodCard({ food }: { food: Food }) {
 
   const deleteFromBasket = async (foodId: string) => {
     try {
-      await basketService.deleteFood(foodId);
-      const user = await userService.getUserData();
-      dispatch(setBasketAction(user.basket));
+      const updatedBasket = await basketService.deleteFood(foodId);
+      dispatch(setBasketAction(updatedBasket));
     } catch (error) {
       console.error(error);
     }

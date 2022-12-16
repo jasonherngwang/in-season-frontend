@@ -30,7 +30,7 @@ export const reducer = (state: State, action: Action): State => {
     case 'SET_USER':
       return {
         ...state,
-        user: action.payload,
+        // user: action.payload,
       };
     default:
       return state;

@@ -29,7 +29,7 @@ export default function Header() {
                 <div className="hidden text-sm font-bold text-neutral-700 group-hover:text-white sm:block">
                   {numItemsInBasket}
                 </div>
-                <ShoppingBagIcon className='text-neutral-300" h-6 w-6 group-hover:text-white  sm:ml-2' />
+                <ShoppingBagIcon className='text-neutral-300" h-6 w-6 group-hover:text-white sm:ml-2' />
               </div>
             </Link>
           </li>
