@@ -25,7 +25,7 @@ export default function Header() {
           </li>
           <li className="flex flex-1 justify-end pb-1">
             <Link to="/basket">
-              <div className="group flex transform items-center rounded-full border px-2 py-1 hover:border-green-600 hover:bg-green-600  sm:px-3">
+              <div className="group flex items-center rounded-full border px-2 py-1 hover:border-green-600 hover:bg-green-600 sm:px-3">
                 <div className="hidden text-sm font-bold text-neutral-700 group-hover:text-white sm:block">
                   {numItemsInBasket}
                 </div>

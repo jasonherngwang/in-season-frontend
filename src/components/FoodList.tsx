@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { Food, FilterParams } from '../types';
 import { useStateValue } from '../state';
 import FoodListSection from './FoodListSection';
@@ -7,6 +8,7 @@ import { sortFoodsAlphabetically } from '../utils/sortUtils';
 import {
   ArrowLeftCircleIcon,
   ArrowRightCircleIcon,
+  PlusIcon,
 } from '@heroicons/react/24/outline';
 
 // Filter and sort array of Foods
@@ -85,21 +87,36 @@ export default function FoodList() {
     <div>
       {/* Month navigation */}
       <div className="mt-10 sm:mt-20">
-        <div className="flex items-center justify-center gap-x-10">
-          <button onClick={() => incrementMonth()}>
-            <ArrowLeftCircleIcon className="h-8 w-8 stroke-neutral-500 hover:fill-green-50 hover:stroke-green-700 sm:h-10 sm:w-10" />
-          </button>
-          <div className="text-center">
-            <p className="font-bold tracking-wider text-green-700">
-              IN SEASON NOW
-            </p>
-            <h1 className="mt-1 text-2xl font-medium text-neutral-600 sm:text-3xl">
-              {month.name}
-            </h1>
+        <div className="grid grid-cols-12">
+          {/* Empty div to occupy space for symmetry for Add Food button */}
+          <div className="sm:col-span-3"></div>
+          <div className="col-span-full flex items-center justify-center gap-x-4 sm:col-span-6 sm:gap-x-10">
+            <button onClick={() => incrementMonth()}>
+              <ArrowLeftCircleIcon className="h-10 w-10 stroke-neutral-500 hover:fill-green-50 hover:stroke-green-700" />
+            </button>
+            <div className="text-center">
+              <p className="font-bold tracking-wider text-green-700">
+                IN SEASON NOW
+              </p>
+              <h1 className="mt-1 text-2xl font-medium text-neutral-600 sm:text-3xl">
+                {month.name}
+              </h1>
+            </div>
+            <button onClick={() => decrementMonth()}>
+              <ArrowRightCircleIcon className="h-10 w-10 stroke-neutral-500 hover:fill-green-50 hover:stroke-green-700" />
+            </button>
           </div>
-          <button onClick={() => decrementMonth()}>
-            <ArrowRightCircleIcon className="h-8 w-8 stroke-neutral-500 hover:fill-green-50 hover:stroke-green-700 sm:h-10 sm:w-10" />
-          </button>
+          <div className="fixed right-4 bottom-4 z-10 items-center justify-end sm:static sm:right-0 sm:bottom-0 sm:col-span-3 sm:flex">
+            <Link
+              to="/foods/add"
+              className="group flex transform items-center rounded-full bg-green-600 px-3 py-2 shadow-md ring-2 ring-white hover:scale-105 sm:p-2 sm:shadow-none"
+            >
+              <PlusIcon className="h-5 w-5 text-white" />
+              <span className="font-base mx-1 whitespace-nowrap font-medium text-white sm:text-sm">
+                Add Food
+              </span>
+            </Link>
+          </div>
         </div>
         <FoodListSection foods={foodsInSeason} />
       </div>

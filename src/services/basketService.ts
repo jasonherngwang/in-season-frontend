@@ -52,7 +52,7 @@ const toggleAcquired = async (
   try {
     const response = await axios.patch(
       `${BASKET_URL}/toggle`,
-      { food: basketFoodId, acquired: newAcquiredState },
+      { basketFood: basketFoodId, acquired: newAcquiredState },
       config
     );
     return response.data;

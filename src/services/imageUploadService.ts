@@ -9,7 +9,6 @@ const upload = async (file: any) => {
   };
 
   try {
-    console.log(file, config);
     const response = await axios.post(`${FOODS_URL}/upload`, file, config);
     return response.data;
   } catch (error) {

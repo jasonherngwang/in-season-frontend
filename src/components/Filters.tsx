@@ -49,9 +49,15 @@ export default function Filters() {
       <div className="col-span-1">
         <label
           htmlFor="filterTerm"
-          className="block font-medium text-neutral-500 sm:text-lg"
+          className="hidden font-medium text-neutral-500 sm:block sm:text-lg"
         >
           Filter by name
+        </label>
+        <label
+          htmlFor="filterTerm"
+          className="block font-medium text-neutral-500 sm:hidden sm:text-lg"
+        >
+          Filter by name and category
         </label>
         <div className="mt-2">
           <input
@@ -67,8 +73,8 @@ export default function Filters() {
         </div>
       </div>
       {/* Checkboxes */}
-      <div className="col-span-1 mt-2 flex flex-col sm:mt-0">
-        <p className="block font-medium text-neutral-500 sm:text-lg">
+      <div className="col-span-1 mt-0 flex flex-col">
+        <p className="hidden font-medium text-neutral-500 sm:block sm:text-lg">
           Select categories
         </p>
         <div className="mt-2 flex gap-4 text-sm sm:mt-4 md:gap-10 md:text-base lg:gap-14">
