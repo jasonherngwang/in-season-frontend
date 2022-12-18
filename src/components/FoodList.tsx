@@ -84,7 +84,7 @@ export default function FoodList() {
   return (
     <div>
       {/* Month navigation */}
-      <div className="mt-14 sm:mt-20">
+      <div className="mt-10 sm:mt-20">
         <div className="flex items-center justify-center gap-x-10">
           <button onClick={() => incrementMonth()}>
             <ArrowLeftCircleIcon className="h-8 w-8 stroke-neutral-500 hover:fill-green-50 hover:stroke-green-700 sm:h-10 sm:w-10" />

@@ -58,11 +58,12 @@ export default function FoodCard({ food }: { food: Food }) {
     <div className="relative flex flex-col overflow-hidden rounded-lg shadow">
       <Link
         to={`/foods/${food.id}/edit`}
-        className="pb-3 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-green-500"
+        className="pb-1 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-green-500 sm:pb-3"
       >
         <div className="group relative hover:opacity-80">
           <PencilSquareIcon className="invisible absolute top-1 right-1 h-7 w-7 text-neutral-500 group-hover:visible" />
-          <div className="aspect-square">
+          {/* Smaller images on mobile; less scrolling */}
+          <div className="mx-auto aspect-square w-3/4 sm:w-full">
             <img
               src={`${food.imageUrl}`}
               className="w-full object-cover object-center sm:h-full sm:w-full"

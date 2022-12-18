@@ -5,7 +5,7 @@ export default function FoodListSection({ foods }: { foods: Food[] }) {
   return (
     <div>
       {foods.length > 0 ? (
-        <div className="mt-10 grid grid-cols-2 gap-y-5 gap-x-5 sm:grid-cols-4 sm:gap-y-7 sm:gap-x-7 lg:grid-cols-6">
+        <div className="mt-6 grid grid-cols-2 gap-y-5 gap-x-5 sm:mt-10 sm:grid-cols-4 sm:gap-y-7 sm:gap-x-7 lg:grid-cols-6">
           {foods.map((food) => (
             <FoodCard key={food.id} food={food} />
           ))}
