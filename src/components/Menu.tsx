@@ -15,6 +15,7 @@ import {
   ArrowLeftOnRectangleIcon,
   ArrowRightOnRectangleIcon,
   PencilIcon,
+  PlusCircleIcon,
 } from '@heroicons/react/20/solid';
 
 export default function SideMenu() {
@@ -54,7 +55,7 @@ export default function SideMenu() {
           <div>
             {isLoggedIn() && (
               <Menu.Item key="username" as="div">
-                <div className="block rounded-t-lg border-b bg-neutral-100 px-4 py-3 font-semibold text-neutral-700 ring-1 ring-neutral-200">
+                <div className="block w-full rounded-t-lg border-b bg-neutral-100 px-4 py-3 font-semibold text-neutral-700 ring-1 ring-neutral-200">
                   {user?.username}
                 </div>
               </Menu.Item>
@@ -64,7 +65,7 @@ export default function SideMenu() {
                 <Link
                   to="/basket"
                   className={clsx(
-                    'group flex items-center px-4 py-4 text-neutral-700',
+                    'group flex w-full items-center px-4 py-4 text-neutral-700',
                     {
                       'text-green-600': active,
                     }
@@ -75,12 +76,30 @@ export default function SideMenu() {
                 </Link>
               )}
             </Menu.Item>
+            {isLoggedIn() && (
+              <Menu.Item key="addfood">
+                {({ active }) => (
+                  <Link
+                    to="/foods/add"
+                    className={clsx(
+                      'group flex w-full items-center px-4 py-4 text-neutral-700',
+                      {
+                        'text-green-600': active,
+                      }
+                    )}
+                  >
+                    <PlusCircleIcon className="mr-2 h-5 w-5 text-neutral-400 group-hover:text-green-600" />
+                    Add Food
+                  </Link>
+                )}
+              </Menu.Item>
+            )}
             <Menu.Item key="plans" as={Fragment}>
               {({ active }) => (
                 <Link
                   to="/plans"
                   className={clsx(
-                    'group flex items-center px-4 py-4 text-neutral-700',
+                    'group flex w-full items-center px-4 py-4 text-neutral-700',
                     {
                       'text-green-600': active,
                     }
@@ -98,7 +117,7 @@ export default function SideMenu() {
                     to="/"
                     onClick={logout}
                     className={clsx(
-                      'group flex items-center px-4 py-4 text-neutral-700',
+                      'group flex w-full items-center border-t border-t-neutral-200 px-4 py-4 text-neutral-700',
                       {
                         'text-green-600': active,
                       }
@@ -112,7 +131,7 @@ export default function SideMenu() {
                     <Link
                       to="/signup"
                       className={clsx(
-                        'group flex items-center px-4 py-4 text-neutral-700',
+                        'group flex w-full items-center border-t border-t-neutral-200 px-4 py-4 text-neutral-700',
                         {
                           'text-green-600': active,
                         }
@@ -124,7 +143,7 @@ export default function SideMenu() {
                     <Link
                       to="/login"
                       className={clsx(
-                        'group flex items-center px-4 py-4 text-neutral-700',
+                        'group flex w-full items-center px-4 py-4 text-neutral-700',
                         {
                           'text-green-600': active,
                         }
@@ -143,7 +162,7 @@ export default function SideMenu() {
                   <button
                     onClick={deleteAccount}
                     className={clsx(
-                      'group flex items-center px-4 py-4 text-neutral-700',
+                      'group flex w-full items-center px-4 py-4 text-neutral-700',
                       {
                         'text-red-600': active,
                       }

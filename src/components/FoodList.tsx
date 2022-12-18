@@ -118,6 +118,9 @@ export default function FoodList() {
             </Link>
           </div>
         </div>
+        <p className="mt-2 text-center text-sm text-neutral-400">
+          Click on any food to edit
+        </p>
         <FoodListSection foods={foodsInSeason} />
       </div>
       {/* Other food sections */}

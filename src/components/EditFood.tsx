@@ -10,14 +10,13 @@ import { tokenExpired } from '../utils/tokenManagement';
 import { PhotoIcon } from '@heroicons/react/24/outline';
 import Spinner from '../icons/Spinner';
 
-// Reuse same form for adding and editing, via `action` prop
-export default function EditFood({
-  foodId,
-  action,
-}: {
-  foodId: any;
+type EditFoodProps = {
+  foodId: string;
   action: string;
-}) {
+};
+
+// Reuse same form for adding and editing, via `action` prop
+export default function EditFood({ foodId, action }: EditFoodProps) {
   const [{ foods }, dispatch] = useStateValue();
 
   const [name, setName] = useState('');
@@ -139,7 +138,9 @@ export default function EditFood({
           setMonths({ ...months, ...food.months });
           setImageUrl(food.imageUrl || '');
         } else {
-          navigate('/'); // If user types in non-existing id
+          if (action === 'edit') {
+            navigate('/'); // If user types in non-existent id
+          }
         }
       } catch (error) {
         console.error(error);

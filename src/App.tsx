@@ -32,7 +32,7 @@ export default function App() {
   const location = useLocation();
 
   const match = useMatch('/foods/:id/edit');
-  const foodId = match ? match.params.id : null;
+  const foodId = match ? (match.params.id as string) : '';
 
   // Fetch all food data on mount, and when navigating back to main screen
   useEffect(() => {
