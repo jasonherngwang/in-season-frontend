@@ -23,6 +23,6 @@ COPY --from=build-stage /in-season-frontend/dist /usr/share/nginx/html
 COPY /nginx.conf /etc/nginx/conf.d/default.conf
 
 # Expose port
-EXPOSE $REACT_DOCKER_PORT
+EXPOSE $REACT_INTERNAL_PORT
 # Start nginx
 CMD ["nginx", "-g", "daemon off;"]
