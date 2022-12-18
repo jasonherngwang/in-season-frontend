@@ -38,8 +38,8 @@ export default function SideMenu() {
   };
 
   return (
-    <Menu as="div" className="relative z-10">
-      <Menu.Button>
+    <Menu as="div" id="menu" className="relative z-10">
+      <Menu.Button id="menuButton">
         <Bars3Icon className='text-neutral-300" h-8 w-8' />
       </Menu.Button>
       <Transition

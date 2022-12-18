@@ -17,7 +17,7 @@ const capitalize = (name: string) => {
 };
 
 export default function FoodCard({ food }: { food: Food }) {
-  const [{ basket, user }, dispatch] = useStateValue();
+  const [{ basket }, dispatch] = useStateValue();
 
   const addToBasket = async (foodId: string) => {
     try {

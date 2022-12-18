@@ -15,7 +15,7 @@ export const setUser = (loggedInUser: LoggedInUser) => {
     'user',
     JSON.stringify({
       username: loggedInUser.username,
-      token: 'Bearer ' + loggedInUser.token,
+      token: loggedInUser.token,
     })
   );
 };
@@ -31,7 +31,7 @@ export const getUserName = () => {
 export const getToken = () => {
   const user = window.localStorage.getItem('user');
   if (user !== null) {
-    return JSON.parse(user).token;
+    return 'Bearer ' + JSON.parse(user).token;
   }
   return null;
 };

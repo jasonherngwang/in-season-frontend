@@ -26,7 +26,7 @@ export default function Login() {
         // Store username and token in localStorage and global state
         setUser(loggedInUser);
         dispatch(setUserAction(loggedInUser));
-        // Redirect user to the route originally requested
+        // Redirect user to the route originally requested, or home
         const origin = location.state?.from?.pathname || '/';
         navigate(origin);
       } else {
@@ -91,6 +91,7 @@ export default function Login() {
           )}
           <div className="mt-8">
             <button
+              id="loginButton"
               className="flex w-full justify-center rounded-md border-transparent bg-green-600 py-3 px-4 font-medium tracking-wider text-white hover:bg-green-500 focus:outline-none focus:ring-2 focus:ring-green-600 focus:ring-offset-2 active:bg-green-700"
               type="submit"
             >
