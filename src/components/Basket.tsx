@@ -1,4 +1,5 @@
 import clsx from 'clsx';
+import { Link } from 'react-router-dom';
 import { setBasketAction, useStateValue } from '../state';
 import basketService from '../services/basketService';
 import { sortBasketFoods } from '../utils/sortUtils';
@@ -46,10 +47,20 @@ export default function Basket() {
         Basket
       </h2>
       {basket.length === 0 ? (
-        <div className="text-center">
+        <div className="mx-auto flex flex-col items-center text-center">
           <h2 className="mt-8 text-2xl text-neutral-400">
-            No foods were found
+            Your basket is empty
           </h2>
+          <Link
+            to="/"
+            className="mt-10 rounded-full bg-green-600 px-4 py-2 font-medium text-white shadow-md"
+          >
+            Browse foods
+          </Link>
+          <img
+            src="https://d1gd44u5i25a4k.cloudfront.net/base/pear.webp"
+            className="mt-10 aspect-square w-36"
+          />
         </div>
       ) : (
         <table className="mt-4 w-full divide-y divide-neutral-300 border-b border-b-neutral-300">

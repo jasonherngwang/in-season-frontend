@@ -15,7 +15,7 @@
     "isolatedModules": true,
     "noEmit": true,
     "jsx": "react-jsx",
-    "types": ["cypress", "cypress-localstorage-commands", "node"],
+    "types": ["cypress", "node"],
   },
   "include": [
     "**/*.ts",

@@ -64,6 +64,7 @@ export default function Filters() {
             type="text"
             name="filterTerm"
             id="filterTerm"
+            value={filterParams.filterTerm}
             className="block w-full rounded-md border-neutral-300 text-sm shadow-sm focus:border-green-600 focus:ring-green-600 sm:max-w-sm sm:text-base"
             placeholder="Food name"
             onChange={(e: React.ChangeEvent<HTMLInputElement>) =>

@@ -66,7 +66,7 @@ export default function FoodCard({ food }: { food: Food }) {
           <div className="mx-auto aspect-square w-3/4 sm:w-full">
             <img
               src={`${food.imageUrl}`}
-              className="w-full object-cover object-center sm:h-full sm:w-full"
+              className="w-full object-contain object-center sm:h-full sm:w-full"
             />
           </div>
           <div className="px-2 pt-1 text-center">
