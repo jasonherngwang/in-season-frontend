@@ -8,7 +8,7 @@ import { sortFoodsAlphabetically } from '../utils/sortUtils';
 import {
   ArrowLeftCircleIcon,
   ArrowRightCircleIcon,
-  PlusIcon,
+  ShoppingBagIcon,
 } from '@heroicons/react/24/outline';
 
 // Filter and sort array of Foods
@@ -56,7 +56,9 @@ const getMonthInfo = (monthNum: number) => {
 };
 
 export default function FoodList() {
-  const [{ foods, filterParams }, _] = useStateValue();
+  const [{ foods, basket, filterParams }, _] = useStateValue();
+  const numItemsInBasket = basket.length;
+
   const [month, setMonth] = useState(getMonthInfo(new Date().getMonth()));
   const nextMonth = getMonthInfo(month.number + 1);
 
@@ -95,7 +97,7 @@ export default function FoodList() {
               <ArrowLeftCircleIcon className="h-10 w-10 stroke-neutral-500 hover:fill-green-50 hover:stroke-green-700" />
             </button>
             <div className="text-center">
-              <p className="font-bold tracking-wider text-green-700">
+              <p className="whitespace-nowrap font-bold tracking-wider text-green-700">
                 IN SEASON NOW
               </p>
               <h1 className="mt-1 text-2xl font-medium text-neutral-600 sm:text-3xl">
@@ -108,13 +110,17 @@ export default function FoodList() {
           </div>
           <div className="fixed right-4 bottom-4 z-10 items-center justify-end sm:static sm:right-0 sm:bottom-0 sm:col-span-3 sm:flex">
             <Link
-              to="/foods/add"
-              className="group flex transform items-center rounded-full bg-green-600 px-3 py-2 shadow-md ring-2 ring-white hover:scale-105 sm:p-2 sm:shadow-none"
+              id="basketIcon"
+              to="/basket"
+              className="group flex transform items-center rounded-full bg-violet-600 px-4 py-3 text-base shadow-md ring-2 ring-white hover:scale-105 sm:px-3 sm:py-2 sm:ring-0"
             >
-              <PlusIcon className="h-5 w-5 text-white" />
-              <span className="font-base mx-1 whitespace-nowrap font-medium text-white sm:text-sm">
-                Add Food
+              <span className="font-base mx-1 whitespace-nowrap font-medium text-white">
+                {numItemsInBasket}{' '}
+                <span className="hidden text-sm sm:inline-block">
+                  in Basket
+                </span>
               </span>
+              <ShoppingBagIcon className="h-5 w-5 text-white sm:hidden" />
             </Link>
           </div>
         </div>

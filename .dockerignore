@@ -4,3 +4,5 @@ dist
 .git
 .gitignore
 Dockerfile
+cypress
+.env

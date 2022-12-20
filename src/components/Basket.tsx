@@ -58,7 +58,7 @@ export default function Basket() {
             Browse foods
           </Link>
           <img
-            src="https://d1gd44u5i25a4k.cloudfront.net/base/pear.webp"
+            src="https://d30lu1rnmhqi8p.cloudfront.net/base/pear.webp"
             className="mt-10 aspect-square w-36"
           />
         </div>

@@ -23,11 +23,10 @@ const plans = [
       'The best way to try out this CRUD app made during Capstone Prep',
     benefits: [
       'Create, edit, and delete your own custom foods',
-      'Edit details and seasonality',
       'Upload images to AWS S3',
       'Store data in a MongoDB document database',
+      'Interact with a 3-tier Dockerized app running on AWS EC2',
       'Experience low latency from the AWS Cloudfront CDN',
-      'Automatic Docker container scaling by AWS ECS',
     ],
     emphasize: true,
     imageUrl: 'images/fig.webp',

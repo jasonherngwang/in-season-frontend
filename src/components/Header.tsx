@@ -1,13 +1,9 @@
 import { Link } from 'react-router-dom';
-import { useStateValue } from '../state';
 
 import Menu from './Menu';
-import { ShoppingBagIcon } from '@heroicons/react/24/outline';
+import { PlusIcon } from '@heroicons/react/24/outline';
 
 export default function Header() {
-  const [{ basket }, dispatch] = useStateValue();
-  const numItemsInBasket = basket.length;
-
   return (
     <header className="py-6 sm:py-8">
       <nav>
@@ -24,12 +20,12 @@ export default function Header() {
             </Link>
           </li>
           <li className="flex flex-1 justify-end pb-1">
-            <Link id="basketIcon" to="/basket">
-              <div className="group flex items-center rounded-full border px-2 py-1 hover:border-green-600 hover:bg-green-600 sm:px-3">
-                <div className="hidden text-sm font-bold text-neutral-700 group-hover:text-white sm:block">
-                  {numItemsInBasket}
-                </div>
-                <ShoppingBagIcon className='text-neutral-300" h-6 w-6 group-hover:text-white sm:ml-2' />
+            <Link to="/foods/add">
+              <div className="shadow=md group flex items-center rounded-full bg-green-600 p-2 hover:scale-105 sm:px-2">
+                <PlusIcon className="h-5 w-5 stroke-2 text-white group-hover:text-white" />
+                <span className="mx-1 hidden whitespace-nowrap text-sm font-medium text-white sm:block">
+                  Add Food
+                </span>
               </div>
             </Link>
           </li>
