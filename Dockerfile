@@ -6,10 +6,6 @@ FROM node:18-alpine AS build-stage
 WORKDIR /in-season-frontend
 # Copy app files
 COPY . .
-
-ARG VITE_API_BASE_URL
-ENV VITE_API_BASE_URL=$VITE_API_BASE_URL
-
 # Clean install of all project dependencies, based on package-lock.json
 RUN npm ci 
 # Build the app

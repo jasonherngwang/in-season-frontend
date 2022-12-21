@@ -20,6 +20,7 @@ const getUserData = async () => {
 
 const getTrialUserData = async () => {
   try {
+    console.log(USERS_URL);
     const response = await axios.get(`${USERS_URL}/trial`);
     return response.data;
   } catch (error) {
