@@ -17,7 +17,8 @@ ENV NODE_ENV production
 # Copy built assets from Stage 1
 COPY --from=build-stage /in-season-frontend/dist /usr/share/nginx/html
 # Copy nginx.conf
-COPY /nginx.conf /etc/nginx/conf.d/default.conf
+COPY /nginx_site_proxy.conf /etc/nginx/conf.d/default.conf
+COPY /nginx.conf /etc/nginx/nginx.conf
 
 # Start nginx
 CMD ["nginx", "-g", "daemon off;"]
