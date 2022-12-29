@@ -29,4 +29,4 @@ Repositories: [Frontend](https://github.com/jasonherngwang/in-season-frontend), 
 ![Architecture](public/in_season_architecture.png)
 
 ### Mobile-First Design
-![Mobile](public/mobile.png)
+![Mobile](public/mobile_view.png)
