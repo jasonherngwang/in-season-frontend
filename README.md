@@ -1,4 +1,4 @@
-![In Season](public/logo.png)
+![In Season](public/logo_small.png)
 
 https://in-season-now.com/
 
@@ -25,8 +25,8 @@ Repositories: [Frontend](https://github.com/jasonherngwang/in-season-frontend), 
 * Store images in S3 and distribute via CloudFront; practice AWS SDK
 
 
-### Architecture Diagram
+## Architecture Diagram
 ![Architecture](public/in_season_architecture.png)
 
-### Mobile-First Design
+## Mobile-First Design
 ![Mobile](public/mobile_view.png)
