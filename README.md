@@ -4,9 +4,9 @@ https://in-season-now.com/
 
 In Season is an app for checking what fruits and vegetables are in season right now. There's a Basket feature that serves as a shopping list. Initial data is for Southern California, but with an account you can customize food details.
 
-I built this app in Launch School, between the Core and Capstone phases. My goal was to use Just-in-Time Learning to pick up a handful of tools and concepts, and integrate them into a fun personal project. I wrote about my experience here:
+I built this app in Launch School, between the Core and Capstone phases. My goal was to use Just-in-Time Learning to pick up a handful of tools and concepts, and integrate them into a personal project. I wrote about my experience here:
 
-Article: [How JIT Learning Helped Me Build an App During Capstone Prep](medium.com)
+Article: TBD
 
 Repositories: [Frontend](https://github.com/jasonherngwang/in-season-frontend), [Backend](https://github.com/jasonherngwang/in-season-backend), [Docker Compose](https://github.com/jasonherngwang/in-season), [Images (Docker Hub)](https://hub.docker.com/repositories/jasonherngwang)
 
@@ -19,7 +19,7 @@ Repositories: [Frontend](https://github.com/jasonherngwang/in-season-frontend), 
 * Build API with Express
 * Use TypeScript on frontend and backend
 * Write integration tests with Jest, E2E tests with Cypress
-* Compare relational and document; setup database with with MongoDB and Mongoose
+* Compare relational and document models; setup database with with MongoDB and Mongoose
 * Configure Docker containers and coordinate with Docker Compose
 * Brush up on networking skills; deploy on EC2 instance with Nginx reverse proxy
 * Store images in S3 and distribute via CloudFront; practice AWS SDK
