@@ -211,9 +211,7 @@ export default function EditFood({ foodId, action }: EditFoodProps) {
                   placeholder="Food name"
                   required
                   className="block w-full appearance-none rounded-md border-neutral-300 shadow-sm placeholder:text-neutral-400 focus:border-green-600 focus:ring-green-600 sm:max-w-md"
-                  onChange={(e) => {
-                    setName(e.target.value);
-                  }}
+                  onChange={(e) => setName(e.target.value)}
                 />
               </div>
             </div>

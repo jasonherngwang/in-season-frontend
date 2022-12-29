@@ -17,6 +17,7 @@ const defaultSeasonality: MonthsInSeason = {
 
 const monthNumToAbbr = (monthNum: number) => {
   const date = new Date();
+  date.setDate(1);
   date.setMonth(monthNum);
 
   return {
