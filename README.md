@@ -1,4 +1,4 @@
-![In Season](public/logo_smaller.png)
+![In Season](public/logo_sm.png)
 
 https://in-season-now.com/
 
