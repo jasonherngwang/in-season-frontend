@@ -23,8 +23,19 @@ Repositories: [Frontend](https://github.com/jasonherngwang/in-season-frontend), 
 * Store images in S3 and distribute via CloudFront; practice AWS SDK
 
 
-## Architecture Diagram
+## Diagrams
+
+### App Architecture
 ![Architecture](public/in_season_architecture.png)
 
-## Mobile-First Design
-![Mobile](public/mobile_view.png)
+### State Management for Forms
+![State Management for Forms](public/in_season_state_mgmt.png)
+
+### Image Upload Feature
+![Image Upload Feature](public/in_season_image_upload.png)
+
+### Mobile-First Design
+![Mobile-First Design](public/mobile_view.png)
+
+### Cloud Computing Stack
+![Cloud Computing Stack](public/infra_stack.png)
